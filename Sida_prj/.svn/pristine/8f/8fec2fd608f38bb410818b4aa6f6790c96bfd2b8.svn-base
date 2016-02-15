@@ -1,0 +1,13 @@
+package com.itwill.sida.dao;
+
+import java.util.HashMap;
+
+import com.itwill.sida.dto.AddressBook;
+
+public interface AddressBookDao {
+	AddressBook selectAddressOne(String ad_no);
+	void createAddress(HashMap<String, String> cMap);
+	void updateAddress(HashMap<String, String> cMap);
+	void deleteAddress(String ad_no);
+
+}

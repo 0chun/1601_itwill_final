@@ -1,0 +1,40 @@
+
+$(document).ready(function() {
+	var date = new Date,
+    d = date.getDate(),
+    m = date.getMonth(),
+    y = date.getFullYear();
+	if ($("#calendar").length) var calendar = $("#calendar").fullCalendar({
+		
+		header: {
+			left: "prevYear, today, nextYear",
+			center: "prev, title, next",
+			right: "month,agendaWeek,agendaDay"
+		},
+		timezone : 'local',
+		allDaySlot: false,
+		businessHours: true,
+		selectable: true,
+		editable: true,
+		select: function(start, end) {
+			var title = prompt("Event Title:");
+			title && calendar.fullCalendar("renderEvent", {
+				title: title,
+				start: start,
+				end: end
+				//allDay: allDay
+			}, 
+			!0), 
+			calendar.fullCalendar("unselect")
+		},
+		events: {
+			url : '/Sida_prj/allEvent',/*'scripts/vendor/fullcalendar/demos/json/events.json'*/
+		},
+		/*dayClick : function(event){
+			alert(event.title);
+		},*/
+		eventClick : function(event){
+			alert(event.title);
+		}
+	})
+});

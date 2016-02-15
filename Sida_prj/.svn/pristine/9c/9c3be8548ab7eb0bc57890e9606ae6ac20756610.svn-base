@@ -1,0 +1,58 @@
+package com.itwill.sida.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+import com.itwill.sida.dao.MoneyBookDao;
+import com.itwill.sida.dao.impl.MoneyBookDaoImpl;
+import com.itwill.sida.dto.MoneyBook;
+import com.itwill.sida.service.MoneyBookService;
+
+@Component
+public class MoneyBookServiceImpl implements MoneyBookService {
+
+	//private static MoneyBookService _instance;
+	
+	private MoneyBookDao moneyBookDao;
+	
+	
+	public MoneyBookDao getMoneyBookDao() {
+		return moneyBookDao;
+	}
+	public void setMoneyBookDao(MoneyBookDao moneyBookDao) {
+		this.moneyBookDao = moneyBookDao;
+	}
+
+	private MoneyBookServiceImpl(){
+		moneyBookDao = new MoneyBookDaoImpl();
+	}
+	/*
+	public static MoneyBookService getInstance(){
+		if(_instance==null){
+			_instance=new MoneyBookServiceImpl();
+		}
+		return _instance;
+	}
+	*/
+	private MoneyBookDao getMoneyBooksDao(){
+		return MoneyBookDaoImpl.getInstance();
+	}
+	
+	@Override
+	public MoneyBook findMoneyBookNo(int mb_no) throws Exception {
+		return getMoneyBooksDao().findMoneyBookNo(mb_no);
+	}
+	@Override
+	public List<MoneyBook> findMoneyBookAll() throws Exception {
+		return getMoneyBooksDao().findMoneyBookAll();
+	}
+	@Override
+	public List<Map<String, String>> findMoneyBookNoResult(int mb_no) throws Exception {
+		return getMoneyBooksDao().findMoneyBookNoResult(mb_no);
+	}
+	
+	
+
+}

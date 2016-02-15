@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mybatis.mapper.SchedulerMapper">
+
+<!--
+S_NO
+S_M_EMAIL
+S_TYPE
+S_STATUS
+S_LOOPTYPE
+S_STARTDATE
+S_ENDDATE
+S_STARTTIME
+S_ENDTIME
+S_TITLE
+S_MEMO
+  -->
+
+	<resultMap id="SchedulerResult" type="Scheduler">
+ 		<id property="s_no" column="s_no" />
+ 		<result property="s_m_email" column="s_m_email"/>
+ 		<result property="s_type" column="s_type"/>
+ 		<result property="s_status" column="s_status"/>
+ 		<result property="s_looptype" column="s_looptype"/>
+ 		<result property="s_startdate" column="s_startdate"/>
+ 		<result property="s_enddate" column="s_enddate"/>
+ 		<result property="s_starttime" column="s_starttime"/>
+ 		<result property="s_endtime" column="s_endtime"/>
+ 		<result property="s_title" column="s_title"/>
+ 		<result property="s_memo" column="s_memo"/>
+ 	</resultMap>
+ 	
+ 	<select id="selectAllSchedule" resultMap="SchedulerResult">
+ 		select * from SCHEDULER
+ 	</select>
+ 	
+ 	
+ 	<insert id="insertSchedule" parameterType="java.util.Map">
+ 		INSERT INTO SCHEDULER(s_no, s_m_email, s_type, s_status, s_looptype, s_startdate, s_enddate, s_starttime, s_endtime, s_title, s_memo)		
+			VALUES (S_NO_SEQ.nextval,#{s_m_email},#{s_type},#{s_status},#{s_looptype},#{s_startdate},#{s_enddate},#{s_starttime},#{s_endtime},#{s_title},#{s_memo} )
+ 	</insert>
+</mapper>

@@ -1,0 +1,12 @@
+package com.itwill.sida.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.itwill.sida.dto.Scheduler;
+
+public interface SchedulerDao {
+	
+	public void insertSchedule(HashMap<String, String> insertMap);
+	public List<Scheduler> selectAllSchedule();
+}

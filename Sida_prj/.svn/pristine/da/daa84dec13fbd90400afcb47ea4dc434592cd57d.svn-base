@@ -1,0 +1,68 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!-- BODY -->
+<div class="body">
+	<section class="content">
+
+		<ol class="breadcrumb">
+			<li><a href="index"><i class="fa fa-home fa-fw"></i>Home</a></li>
+			<li class="active">Calendar</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">달력</h3>
+				<p class="header-info">Easily organize your schedule</p>
+			</div>
+		</div>
+		
+		<!-- CONTENT -->
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="calendar"></div>
+				</div>
+				
+				<!-- modal  -->
+				<div id="fullCalModal" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span> <span class="sr-only">close</span>
+								</button>
+								<h4 id="modalTitle" class="modal-title"></h4>
+							</div>
+							<div id="modalBody" class="modal-body">
+								<!-- Start: <span id="startTime">12</span><br> 
+								End: <span id="endTime"></span><br> -->
+								<form>
+									<div class="form-group">
+										<label for="startTime" class="control-label">Start:</label>
+										<input type="text" class="form-control" id="startTime">
+									</div>
+									<div class="form-group">
+										<label for="endTime" class="control-label">End:</label>
+										<input type="text" class="form-control" id="endTime">
+									</div>
+									<div class="form-group">
+										<label for="memo-txt" class="control-label">Memo:</label>
+										<textarea class="form-control" id="memo-txt"></textarea>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Save Change</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- END: CONTENT -->
+	</section>
+</div>
+<!-- END: BODY -->

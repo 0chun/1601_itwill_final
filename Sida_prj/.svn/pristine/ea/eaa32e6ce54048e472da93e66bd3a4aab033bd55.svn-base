@@ -1,0 +1,53 @@
+* id를 pk로?, no를 pk로? *
+
+create table member (
+ m_id varchar2(60) primary key, 
+ m_pwd varchar2(60) not null,
+ m_name varchar2(80) not null,
+ m_image varchar2(2000),
+ m_address varchar2(4000)
+)
+
+================================================
+
+create table card (
+ c_no number primary key,
+ c_name varchar2(60) not null,
+ c_keyword varchar2(2000) not null,
+ c_m_id varchar2(60)
+)
+
+ALTER TABLE card ADD CONSTRAINT c_m_id
+FOREIGN KEY(m_id) REFERENCES member;
+
+================================================
+
+create table addressBook (
+ ab_no number primary key,
+ ab_first_name varchar2(80),
+ ab_last_name varchar2(80),
+ ab_company varchar2(60),
+ ab_contact1 varchar2(40),
+ ab_contact2 varchar2(40),
+ ab_contact3 varchar2(40),
+ ab_address varchar2(4000),
+ ab_image varchar2(2000),
+ ab_memo varchar2(4000),
+ ab_card varchar2(2000),
+ ab_m_id varchar2(60)
+)
+ALTER TABLE addressBook ADD CONSTRAINT ab_m_id
+FOREIGN KEY(m_id) REFERENCES member;
+
+================================================
+
+create table schedule (
+  s_code number not null,
+  s_year number check(s_year BETWEEN 2000 AND 2999),
+  s_mon number check(s_mon BETWEEN 1 AND 12),
+  s_day number check(s_day BETWEEN 1 AND 31),
+  s_hour number check(s_hour BETWEEN 0 AND 24),
+  s_m_id varchar2(60)
+)
+ALTER TABLE schedule ADD CONSTRAINT s_m_id
+FOREIGN KEY(m_id) REFERENCES member;

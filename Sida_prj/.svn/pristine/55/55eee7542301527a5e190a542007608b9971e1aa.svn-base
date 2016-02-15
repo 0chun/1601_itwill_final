@@ -1,0 +1,35 @@
+package com.itwill.sida.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class LoginController {
+	@RequestMapping("/login")
+	public String login(Model model){
+		return "login";
+	}
+	@RequestMapping(value="/loginCheck",produces="application/json")
+	public @ResponseBody String loginCheck(@RequestParam("email")String email, @RequestParam(value="pwd",required=true) String pwd, HttpSession session){
+		String returnText = null;
+		String flag="success";
+		switch (flag) {
+		case "emailErr":
+			returnText="{\"data\":\"Check Email\",\"stat\":false}";
+			break;
+		case "pwdErr":
+			returnText="{\"data\":\"Check Password\",\"stat\":false}";
+			break;
+		case "success":
+			returnText="{\"data\":\"Success Login\",\"stat\":true}";
+			session.setAttribute("sMember", null);
+			break;
+		}
+		return returnText;
+	}
+}

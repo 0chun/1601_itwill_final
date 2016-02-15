@@ -1,0 +1,8 @@
+package mybatis.mapper;
+
+import java.util.HashMap;
+
+public interface CardMapper {
+
+	void insertCard(HashMap<String, String> cMap);
+}

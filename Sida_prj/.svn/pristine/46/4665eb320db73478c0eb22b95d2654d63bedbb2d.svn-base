@@ -1,0 +1,11 @@
+package com.itwill.sida.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itwill.sida.dto.Card;
+
+public interface CardDao {
+	void cardRegist(HashMap<String, String> cMap);
+	ArrayList<Card> getCardList(String m_email);
+}

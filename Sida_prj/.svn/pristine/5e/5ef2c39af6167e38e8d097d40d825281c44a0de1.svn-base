@@ -1,0 +1,60 @@
+package com.itwill.sida.mail;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/email")
+public class EmailController {
+    @Autowired
+    private MailServiceImpl mailService;
+     
+    @RequestMapping("/send")
+    public String sendEmailAction () throws Exception {
+
+		Mail mail = new Mail();
+		
+		//setting Resume mail sending
+		StringBuffer sb = new StringBuffer();
+
+		// 메일 제목
+		mail.setSubject("AA");
+
+		//받는 사람 리스트
+		List<String> toList = new ArrayList<String>();
+//		for(Manager toUser : managerList){
+//			toList.add(toUser.getEmail());
+//		}
+
+		toList.add("juiseob@gmail.com");
+		mail.setToUser(toList);
+		
+		// 받는 내용 
+		StringBuffer sbText = new StringBuffer();
+		sbText.append("간다");
+		mail.setText(sbText.toString());
+		
+		// 파일 첨부
+//		List<File> attcheFiles = new ArrayList<File>();
+//		List<String> attcheFileName = new ArrayList<String>();
+//		if(filesList!=null){
+//			for(int i=0; i<filesList.size(); i++){
+//				Files files = filesList.get(i);
+//				File file = new File(saveFileLocation + File.separator + files.getRenameFileName());
+//				attcheFiles.add(file);
+//				attcheFileName.add(files.getRenameFileName());
+//			}
+//		}
+//		mail.setFile(attcheFiles);
+//		mail.setAttcheFileName(attcheFileName);
+//		
+		boolean result = mailService.sendMail(mail);
+		System.out.println("result : "+result);
+		
+		return "login";
+    }
+}    

@@ -1,0 +1,61 @@
+package com.itwill.sida.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.itwill.sida.dto.AddressBook;
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.service.AddressBookService;
+
+@Controller
+public class AddressBookController {
+	@Autowired
+	AddressBookService addressBookService;
+	
+	@RequestMapping("addressbook")
+	public String addressbook(Model model, HttpSession session){
+		String forwardPath = "index";
+		if ((Member) session.getAttribute("sMember") == null) {
+			return "redirect:login";
+		}
+		Member member = (Member) session.getAttribute("sMember");
+		ArrayList<AddressBook> addressBookList = addressBookService.getAddressList(member.getM_email());
+		
+		model.addAttribute("addressBookList", addressBookList);
+		model.addAttribute("path","addressbook.jsp");
+		return forwardPath;
+	}
+	
+	@RequestMapping("searchAddress")
+	public String searchAddress(@RequestParam(value="optionsRadios", required = false) int r_value, @RequestParam(value="s_text",required = false) String s_text,
+			Model model) {
+		String forwardPath = "index";
+		ArrayList<AddressBook> addressBookList = null;
+		if(r_value==1){
+			System.err.println(r_value+": company검색 if문 통과");
+			addressBookList = addressBookService.findAddressByCompany(s_text);
+		}else if(r_value==2){
+			System.err.println(r_value+": name검색 if문 통과");
+			
+			addressBookList = addressBookService.findAddressByName(s_text);
+		}else if(r_value==3){
+			System.err.println(r_value+": number검색  if문 통과");
+			addressBookList = addressBookService.findAddressByNumber(s_text);
+		}
+		
+		model.addAttribute("addressBookList", addressBookList);
+		model.addAttribute("path","addressbook.jsp");
+		return forwardPath;
+	}
+	
+	
+}

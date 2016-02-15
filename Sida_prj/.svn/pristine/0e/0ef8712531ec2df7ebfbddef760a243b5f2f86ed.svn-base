@@ -1,0 +1,7 @@
+package com.itwill.sida.dao;
+
+import java.util.HashMap;
+
+public interface CardDao {
+	void cardRegist(HashMap<String, String> cMap);
+}

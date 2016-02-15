@@ -1,0 +1,21 @@
+package com.itwill.sida.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.sida.service.AddressBookService;
+
+@Controller
+public class AddressBookController {
+	@Autowired
+	AddressBookService addressBookService;
+	
+	@RequestMapping("addressbook")
+	public String addressbook(Model model){
+		String forwardPath = "index";
+		model.addAttribute("path","addressbook.jsp");
+		return forwardPath;
+	}
+}

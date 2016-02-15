@@ -1,0 +1,341 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<style type="text/css">
+	.form-inline .form-group input {
+		width:180px;
+	}
+	.form-inline .form-group .control-label1 {
+		width:40px;
+	}
+	.form-inline .form-group .control-label {
+		width:80px;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#calendar").fullCalendar({
+		header : {
+			left : "prevYear, today, nextYear", // 전년, 오늘, 내년
+			center : "prev, title, next", // 전월, 타이틀, 다음월
+			right : "month, agendaWeek, agendaDay" // 월간, 주간, 일간
+		},
+		slotMinutes: 15,	// agenda view 시간 간격
+		selectable : true, // 선택가능여부
+		//selectHelper : true, 
+		editable : true, // 이벤트 수정가능여부
+		timeFormat: {
+	          agenda: 'H:mm{ - H:mm}',
+	          '': 'H:mm{ - H:mm}'
+	     },
+		events : {			//이벤트 소스
+			url : 'selectById'
+		},
+		eventRender: function(event, element) { 
+			if (event.allDay === 'false') {	// allday 값 재설정
+				event.allDay = false;
+			} 
+		},
+		select : function(start, end, allDay) {
+			var title = prompt("Event Title:");
+			var eventData;
+			if (title) {
+				eventData = {
+					title : title,
+					start : start,
+					end : end,
+					allDay : allDay
+				};
+				$('#modalTitle').val(eventData.title);
+				$('#start').val($.fullCalendar.formatDate(eventData.start, "yyyy-MM-dd"));
+				$('#end').val($.fullCalendar.formatDate(eventData.end, "yyyy-MM-dd"));
+				$('#startTime').val(null);
+				$('#endTime').val(null);
+				$('#memo-txt').val('');
+				if(eventData.allDay == false){
+					$('#startTime').val($.fullCalendar.formatDate(eventData.start, "HH:mm"));
+					$('#endTime').val($.fullCalendar.formatDate(eventData.end, "HH:mm"));
+					$('#eventAllDay').val(eventData.allDay);
+				}
+				$('.removeBtn').attr('disabled', true);	// 달력에서 날짜 선택 시 삭제버튼은 비활성 ( 신규 이벤트 입력 시 )
+				$('#fullCalModal').modal('show');
+			}
+			$('#calendar').fullCalendar('unselect');
+		},
+		eventClick : function(event, jsEvent, view) {
+			$('#modalTitle').val(event.title);
+			$('#start').val($.fullCalendar.formatDate(event.start, "yyyy-MM-dd"));	// fullcalendar 시간 format 설정
+			$('#end').val($.fullCalendar.formatDate(event.end, "yyyy-MM-dd"));
+			$('#startTime').val(null);	// 기본으로 시간 값은 null
+			$('#endTime').val(null);
+			$('#memo-txt').val(event.memo);
+			$('#eventId').val(event.id);	// 이벤트 저장 시 필요한 primary 값 히든으로 저장(s_no)
+			$('#eventAllDay').val(event.allDay);	// allday checkbox 설정 시 필요한 allday 값 히든으로 저장
+			
+			if(event.allDay == false){	// allday 이벤트가 아닌 경우 시간 값 표시
+				$('#startTime').val($.fullCalendar.formatDate(event.start, "HH:mm"));
+				$('#endTime').val($.fullCalendar.formatDate(event.end, "HH:mm"));
+			} 
+			$('#fullCalModal').modal('show');
+			
+		},
+		
+		eventResize: function(event) {		// 이벤트 사이즈 변경 시 업데이트
+			var start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd HH:mm");
+			var end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd HH:mm");
+			if(event.allDay == 'false'){
+				event.allDay = 'f';
+			} else {
+				event.allDay = 't';
+				start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd");
+				end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd");
+			}
+			var result = confirm("is this okay?");
+			if (result) {
+				$.ajax({
+		        	url : 'save',
+		        	type : 'POST',
+		        	data : {'s_no' : event.id ,
+		        			's_start' : start,
+		        			's_end' : end,
+		        			's_title' : event.title,
+		        			's_memo' : event.memo,
+		        			's_allday' : event.allDay}
+		        });	
+		    }
+		} ,
+		eventDrop: function(event, allDay) {		// 이벤트 drag & drop 시 업데이트  - agenda view 시 오류
+			var start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd HH:mm");
+			var end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd HH:mm");
+			if(event.allDay == 'false'){
+				event.allDay = 'f';
+			} else {
+				event.allDay = 't';
+				start = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd");
+				end = $.fullCalendar.formatDate(event.end, "yyyy-MM-dd");
+			}
+			alert(event.allDay);
+			var result = confirm("is this okay?");
+			if (result) {
+				/* $.ajax({
+		        	url : 'save',
+		        	type : 'POST',
+		        	data : {'s_no' : event.id ,
+		        			's_start' : start,
+		        			's_end' : end,
+		        			's_title' : event.title,
+		        			's_memo' : event.memo,
+		        			's_allday' : event.allDay}
+		        });	 */
+		    }
+		}
+ 	})
+ 	
+ 	$('#fullCalModal').on('show.bs.modal', function (event) {	// modal('show') 할 때 checkbox 체크용 
+  		var modal = $(this)
+  		modal.find('#alldaychk').prop('checked',true);
+  		modal.find('#alldaychk').parent().addClass('checked');	// jquery Uniform 플러그인 때문에 (checkbox를 자동으로 <span>으로 감싼다 : <span>태그에 "checked" class 추가) 
+  		if($('#eventAllDay').val() == 'false' ){ //allday가 아닌 경우
+			modal.find('#alldaychk').prop('checked',false);
+	  		modal.find('#alldaychk').parent().removeClass('checked');	// class 제거
+		}
+	})
+	
+	$("#alldaychk").change(function(){	// allday checkbox 누르면 시간 입력 값 제거
+		if($("#alldaychk").is(":checked")){
+			$('#startTime').val(null);
+			$('#endTime').val(null);
+			$('#startTime').attr('disabled', true);
+			$('#endTime').attr('disabled', true);
+		} else {
+			$('#startTime').attr('disabled', false);
+			$('#endTime').attr('disabled', false);
+		}
+	}); 
+ 	
+ 	$('.removeBtn').click(function (event) {	// 이벤트 삭제 버튼
+ 		var result = confirm("Are you sure for removing this event?")
+ 		if(result){
+	        var id = $('#eventId').val();
+	        $.ajax({
+	        	url : 'delete',
+	        	type : 'POST',
+	        	data : {'s_no':id}
+	        });
+	        $('#calendar').fullCalendar('removeEvents', id);
+	        $('#fullCalModal').modal('hide');
+	        $('#calendar').fullCalendar('refetchEvents');
+ 		}
+    });
+
+    $('.saveBtn').click(function (event) {	// 이벤트 저장 버튼
+        var id = $('#eventId').val();
+        var title = $('#modalTitle').val();
+        var start = $('#start').val() + ' ' + $('#startTime').val(); //2016-01-10 15:00
+        var end = $('#end').val() + ' ' + $('#endTime').val();
+        var memo = $('#memo-txt').val();
+        var allday = 'f';
+	   	if ($('#alldaychk').is(':checked')){ // allday 이벤트인 경우 설정 
+	   		allday = 't';
+	   		start = $('#start').val();
+	   		end = $('#end').val();
+        }
+        $.ajax({
+        	url : 'save',
+        	type : 'POST',
+        	data : {'s_no' : id ,
+        			's_start' : start,
+        			's_end' : end,
+        			's_title' : title,
+        			's_memo' : memo,
+        			's_allday' : allday}
+        });
+        $('#fullCalModal').modal('hide');
+        
+        setTimeout(function(){
+        	$('#calendar').fullCalendar('refetchEvents');	// 달력 다시 그리기 (refresh) 
+        	
+        }, 20);
+    });
+});
+</script>
+
+<!-- BODY -->
+<div class="body">
+	<section class="content">
+
+		<ol class="breadcrumb">
+			<li><a href="index"><i class="fa fa-home fa-fw"></i>Home</a></li>
+			<li class="active">Calendar</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">달력</h3>
+				<p class="header-info">Easily organize your schedule</p>
+			</div>
+		</div>
+		
+		<!-- CONTENT -->
+		<div class="main-content">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div id="calendar"></div>
+				</div>
+				
+				<!-- primary modal  -->
+				<div id="fullCalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span> 
+								</button>
+								<!-- <h4 id="modalTitle" class="modal-title"></h4> -->
+								<input type="text" class="modal-title" id="modalTitle" >
+							</div>
+							
+							<div id="modalBody" class="modal-body">
+								<form class="form-inline" >
+									<div class="form-group">
+										<label for="start" class="control-label1">Start : </label>
+										<input type="date" class="form-control" id="start"></span>
+									</div>
+									<div class="form-group" >
+										<label for="startTime" class="control-label">Start Time:</label>
+										<input type=time class="form-control" id="startTime">
+									</div>
+								</form>
+								<form class="form-inline" >
+									<div class="form-group">
+										<label for="end" class="control-label1">End   : </label>
+										<input type="date" class="form-control" id="end">
+									</div>
+									<div class="form-group">
+										<label for="endTime" class="control-label">End Time:</label>
+										<input type="time" class="form-control" id="endTime">
+									</div>
+								</form>
+								<br>
+								<form class="form-inline" width= "auto">
+									All Day : 
+									<label>
+										<input type="checkbox" id="alldaychk" >
+									</label>
+									<!-- <a data-toggle="modal" href="#myModal2" type="button" class="btn btn-info btn-default btn-sm">Repeat</a> -->
+								</form>
+								<!-- <form class="form-inline" width= "auto"> -->
+									<!-- <label>
+										Repeat :  
+										none <input type="radio" value="9" name="repeat-freq" align="bottom"><input type="radio" value="9" name="repeat-freq" align="bottom">
+										day <input type="radio" value="1" name="repeat-freq" align="bottom">
+										week <input type="radio" value="7" name="repeat-freq" align="bottom">
+            							two weeks <input type="radio" value="14" name="repeat-freq" align="bottom">
+									</label> -->
+									<div class="radiobox">
+				                        Repeat :  
+				                        <label>
+											<input type="radio" name="optionsRadios" id="opt99" value="99" checked="checked">None &nbsp;
+				                        </label>
+				                        <label>
+				                            <input type="radio" name="optionsRadios" id="opt1" value="1">Day &nbsp;
+				                        </label>
+				                        <label>
+				                            <input type="radio" name="optionsRadios" id="opt7" value="7">Week &nbsp;
+				                        </label>
+				                        <label>
+				                            <input type="radio" name="optionsRadios" id="opt14" value="14">Two week &nbsp;
+				                        </label>
+				                        <label>
+				                            <input type="radio" name="optionsRadios" id="opt30" value="30">Month 
+				                        </label>
+				                	</div>
+								<!-- </form> -->
+									<br>
+								<form class="form-group" >
+									<label for="memo-txt" class="control-label">Memo</label>
+									<textarea class="form-control" id="memo-txt"></textarea>
+								</form>
+							</div>
+							
+							<div class="modal-footer">
+								<input type="hidden" id="eventId"/>
+								<input type="hidden" id="eventAllDay"/>
+								<button type="button" class="btn btn-primary saveBtn" >Save</button>
+								<button type="button" class="btn btn-primary removeBtn">Remove Event</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end modal  -->
+				
+				<!-- second modal -->
+				<div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span> 
+								</button>
+								<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
+								<h4 class="modal-title">Repeat</h4>
+							</div>
+							<div class="container"></div>
+							<div class="modal-body">Content for the dialog / modal goes here.</div>
+							<div class="modal-footer">
+								<a href="#" class="btn btn-primary">Save</a>
+								<a href="#" data-dismiss="modal" class="btn">Close</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+		<!-- END: CONTENT -->
+	</section>
+</div>
+<!-- END: BODY -->

@@ -1,0 +1,31 @@
+package com.itwill.sida.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.sida.dto.Scheduler;
+import com.itwill.sida.service.SchedulerService;
+
+@Controller
+public class SchedulerController {
+	
+	@Autowired
+	SchedulerService schedulerService;
+	
+	@RequestMapping(value= "/test")
+	public String selectAll(Model model){
+		
+		String forwardPath="index";
+		List<Scheduler> scList = schedulerService.selectAllSchedule();
+		System.out.println(scList);
+		//model.addAttribute("path", "index");
+		model.addAttribute(scList);
+		return "jsonView";
+	}
+	
+	
+}

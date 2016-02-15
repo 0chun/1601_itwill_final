@@ -1,0 +1,14 @@
+package mybatis.mapper;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.itwill.sida.dto.Scheduler;
+
+public interface SchedulerMapper {
+
+	public void insertSchedule(HashMap<String, String> insertMap);
+	public List<Scheduler> selectAllSchedule();
+	public List<Scheduler> selectById(String s_m_email);
+	public void deleteSchedule(int s_no);
+}

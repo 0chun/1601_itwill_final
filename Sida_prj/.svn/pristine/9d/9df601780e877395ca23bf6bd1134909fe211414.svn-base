@@ -1,0 +1,81 @@
+package com.itwill.sida.dao.impl;
+
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
+
+import com.itwill.sida.dao.MemberDao;
+import com.itwill.sida.dto.Member;
+import com.itwill.util.MyBatisSqlSessionFactory;
+
+import mybatis.mapper.MemberMapper;
+
+@Component
+public class MemberDaoImpl implements MemberDao {
+
+	@Override
+	public Member findMemberByEmail(String m_email) {
+		SqlSession sqlSession = null;
+		Member findMember = null;
+		try {
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			findMember = sqlSession.getMapper(MemberMapper.class).findMemberByEmail(m_email);
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return findMember;
+	}
+
+	@Override
+	public Member getMember(String email, String pwd) {
+		SqlSession sqlSession = null;
+		Member findMember = null;
+		try {
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			HashMap<String, String> pMap = new HashMap<String, String>();
+			pMap.put("m_email", email);
+			pMap.put("m_pwd", pwd);
+			findMember = sqlSession.getMapper(MemberMapper.class).selectMember(pMap);
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return findMember;
+	}
+
+	@Override
+	public void joinMember(Member member) {
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			sqlSession.getMapper(MemberMapper.class).joinMember(member);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	@Override
+	public void pwdChange(Member sMember) {
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			sqlSession.getMapper(MemberMapper.class).updatePwd(sMember);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+}

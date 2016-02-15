@@ -1,0 +1,95 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!-- BODY -->
+<div class="body">
+	<section class="content">
+
+		<ol class="breadcrumb">
+			<li><a href="index.html"><i class="fa fa-home fa-fw"></i>
+					Home</a></li>
+			<li class="active">Forms</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">Money Book</h3>
+				<p class="header-info">지출내역을 입력 할 수 있습니다</p>
+			</div>
+		</div>
+
+		<!-- CONTENT -->
+		<div class="main-content">
+
+			<div style="margin-left: 5%; margin-right: 5%"></div>
+			<form role="form" id="f" action="#" method="post">
+
+				<!-- <div class="input-group">
+					<input class="form-control datepicker" id="ark-ex-datepicker"
+						type="text" data-date-format="mm/dd/yyyy" /> <span
+						class="input-group-addon"> <i class="fa fa-calendar"></i>
+						</span>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail2">Email</label> <input type="email"
+						class="form-control" id="exampleInputEmail2"
+						placeholder="jane.doe@example.com">
+				</div> -->
+
+				<label for="exampleInputEmail1">Date</label>
+				<div class="col-xs-1 input-group">
+					<input class="form-control datepicker" id="ark-ex-datepicker"
+						type="text" data-date-format="mm/dd/yyyy" /> <span
+						class="input-group-addon"> <i class="fa fa-calendar"></i>
+					</span>
+				</div>
+				
+				<label for="exampleInputEmail1">Outgo</label>
+				<div class="col-xs-2 input-group">
+					<input type="text" class="form-control" id="imb_outgo"
+							placeholder="지출금액을 입력하세요" name="imb_outgo">
+				</div>
+	
+				<div class="form-group">
+					<label for="exampleInputEmail1">Memo</label>
+					<div class="col-xs-2 input-group">
+						<textarea class="form-control" rows="4" name="imb_memo"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="exampleInputEmail1">Category</label>
+					<div class="col-xs-2 input-group">
+					<span class="dropdown"> <select class="form-control select2"
+						name="imb_category">
+							<option value="없음">없음</option>
+							<option value="식비">식비</option>
+							<option value="문화생활비">문화생활비</option>
+							<option value="건강관리비">건강관리비</option>
+							<option value="의류미용비">의류미용비</option>
+							<option value="교통비">교통비</option>
+							<option value="차량유지비">차량유지비</option>
+							<option value="주거생활비">주거생활비</option>
+							<option value="학비">학비</option>
+							<option value="사회생활비">사회생활비</option>
+							<option value="유흥비">유흥비</option>
+							<option value="금융보험비">금융보험비</option>
+							<option value="저축">저축</option>
+							<option value="기타">기타</option>
+					</select>
+					</span>
+					</div>
+				</div>
+
+				<div class="col-md-7 form-group">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+
+			</form>
+			<!-- form end -->
+
+		</div>
+
+		<!-- END: CONTENT -->
+	</section>
+</div>
+<!-- END: BODY -->

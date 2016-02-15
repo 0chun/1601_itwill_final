@@ -1,0 +1,42 @@
+package com.itwill.sida.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.service.MemberService;
+
+@Controller
+public class MemberJoinController {
+
+	@Autowired
+	public MemberService memberService;
+
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+
+	@RequestMapping(value = "/emailCheck", produces = "application/json")
+	public @ResponseBody String emailCheck(@RequestParam("email") String email) {
+		String returnText = null;
+		Member member = memberService.emailCheck(email);
+		if (member == null) {
+			returnText = "{\"data\":\"E-mail is available\",\"flag\":true}";
+		} else {
+			returnText = "{\"data\":\"E-mail is Unavailable\",\"flag\":false}";
+		}
+		return returnText;
+	}
+	
+	@RequestMapping("/joinMember")
+	public String joinMember(@ModelAttribute("member") Member member){
+		String forwradPath="";
+		System.out.println(member);
+		/*memberService.joinMember();*/
+		return forwradPath;
+	}
+}

@@ -1,0 +1,50 @@
+package com.itwill.sida.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.itwill.sida.dao.AddressBookDao;
+import com.itwill.sida.dto.AddressBook;
+import com.itwill.sida.service.AddressBookService;
+
+@Component
+public class AddressBookServiceImpl implements AddressBookService {
+	@Autowired
+	public AddressBookDao addressBookDao;
+	
+	public void setAddressBookDao(AddressBookDao addressBookDao) {
+		this.addressBookDao = addressBookDao;
+	}
+
+	@Override
+	public AddressBook getAddress(String ad_no) {
+		return addressBookDao.selectAddressOne(ad_no);
+	}
+
+	@Override
+	public void addressRegist(HashMap<String, String> cMap) {
+		addressBookDao.createAddress(cMap);
+		
+	}
+
+	@Override
+	public void editAddress(HashMap<String, String> cMap) {
+		addressBookDao.updateAddress(cMap);
+		
+	}
+
+	@Override
+	public void deleteAddress(String ad_no) {
+		addressBookDao.deleteAddress(ad_no);
+		
+	}
+
+	@Override
+	public ArrayList<AddressBook> getAddressList(String m_mail) {
+		return addressBookDao.getAddressBookList(m_mail);
+	}
+	
+}

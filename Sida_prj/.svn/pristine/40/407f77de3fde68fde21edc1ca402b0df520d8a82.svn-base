@@ -1,0 +1,97 @@
+package com.itwill.sida.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.service.MemberService;
+
+@Controller
+public class MemberController {
+
+	@Autowired
+	public MemberService memberService;
+
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+	
+	@RequestMapping(value="accountSetting",produces = "application/json; charset=utf-8")
+	public String accountSettingForm(HttpSession session, Model model){
+		Member sMember = (Member) session.getAttribute("sMember");
+		String forwardPath="";
+		if(sMember==null)
+			forwardPath="redirect:login";
+		Member rtnMember = memberService.findMemberByEmail(sMember.getM_email());
+		model.addAttribute("path", "accountSetting.jsp");
+		model.addAttribute("member", rtnMember);
+		return "index";
+	}
+	
+	@RequestMapping(value = "/emailCheck", produces = "application/json; charset=utf-8")
+	public @ResponseBody String emailCheck(@RequestParam("email") String email) {
+		String returnText = null;
+		Member member = memberService.findMemberByEmail(email);
+		if (member == null) {
+			returnText = "{\"data\":\"E-mail is available\",\"flag\":true}";
+		} else {
+			returnText = "{\"data\":\"E-mail is Unavailable\",\"flag\":false}";
+		}
+		return returnText;
+	}
+
+	@RequestMapping("/joinMember")
+	public String joinMember(@ModelAttribute("member") Member member) {
+		String forwradPath = "";
+		try {
+			forwradPath = "login";
+			memberService.joinMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return forwradPath;
+	}
+
+	@RequestMapping("/login")
+	public String login(Model model) {
+		return "login";
+	}
+	
+	
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpSession session) {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("login");
+		session.invalidate();
+		return mv;
+	}
+	
+
+	@RequestMapping(value = "/loginCheck", produces = "application/json")
+	public @ResponseBody String loginCheck(@RequestParam("email") String email,
+			@RequestParam(value = "pwd", required = true) String pwd, HttpSession session) throws Exception {
+		String returnText = null;
+		String flag = memberService.login(email, pwd);
+		switch (flag) {
+		case "emailErr":
+			returnText = "{\"data\":\"Check Email\",\"stat\":false}";
+			break;
+		case "pwdErr":
+			returnText = "{\"data\":\"Check Password\",\"stat\":false}";
+			break;
+		case "success":
+			returnText = "{\"data\":\"Success Login\",\"stat\":true}";
+			session.setAttribute("sMember", memberService.getMember(email, pwd));
+			break;
+		}
+		return returnText;
+	}
+}

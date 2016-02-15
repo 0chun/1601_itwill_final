@@ -1,0 +1,42 @@
+package com.itwill.sida.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.itwill.sida.dto.Card;
+import com.itwill.sida.dto.CardResult;
+import com.itwill.sida.service.CardService;
+
+@Controller
+public class RESTController {
+	@Autowired
+	CardService cardService;
+
+	public void setCardService(CardService cardService) {
+		this.cardService = cardService;
+	}
+
+	@RequestMapping(value = "getCardListREST", produces = "application/xml; charset=utf-8")
+	public @ResponseBody CardResult getCardListREST(@RequestParam("phoneNum") String phoneNum) {
+		System.err.println("REST 넘어오는 값:" + phoneNum);
+		ArrayList<Card> cardList = cardService.getCardListByPhoneNum_smsReceive(phoneNum);
+		System.err.println("cardList:" + cardList);
+		CardResult cardResult = new CardResult();
+		cardResult.setCardList(cardList);
+		cardResult.setSize(cardList.size());
+		return cardResult;
+	}
+
+	@RequestMapping(value = "sendCardDataREST")
+	public void sendCardData(@RequestParam("phoneNum") String phoneNum, @RequestParam("pay") String pay,
+			@RequestParam("c_no") String c_no) {
+		System.out.println(phoneNum + " : " + pay+" : "+c_no);
+		// 010-2626-3250
+		
+	}
+}

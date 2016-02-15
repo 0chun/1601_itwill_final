@@ -1,0 +1,36 @@
+package com.itwill.sida.dao.impl;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.itwill.sida.dao.SchedulerDao;
+import com.itwill.sida.dto.Scheduler;
+
+import mybatis.mapper.SchedulerMapper;
+
+@Component
+public class SchedulerDaoImpl implements SchedulerDao {
+	
+	public SchedulerMapper schedulerMapper;
+	
+	public void setSchedulerMapper(SchedulerMapper schedulerMapper) {
+		this.schedulerMapper = schedulerMapper;
+	}
+
+	@Override
+	public void insertSchedule(HashMap<String, String> insertMap) {
+		schedulerMapper.insertSchedule(insertMap);
+	}
+
+	@Override
+	public List<Scheduler> selectAllSchedule() {
+		List<Scheduler> sc = schedulerMapper.selectAllSchedule();
+		return sc;
+	}
+
+	
+
+}

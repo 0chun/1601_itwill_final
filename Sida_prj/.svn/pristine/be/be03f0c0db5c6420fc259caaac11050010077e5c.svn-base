@@ -1,0 +1,13 @@
+package mybatis.mapper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itwill.sida.dto.Card;
+
+public interface CardMapper {
+
+	void insertCard(HashMap<String, String> cMap);
+
+	ArrayList<Card> selectCardList(String m_email);
+}

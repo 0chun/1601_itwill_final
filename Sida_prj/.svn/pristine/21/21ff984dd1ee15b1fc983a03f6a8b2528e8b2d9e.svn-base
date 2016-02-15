@@ -1,0 +1,64 @@
+$(document).ready(function() {
+	$("#calendar").fullCalendar({
+		header : {
+			left : "prevYear, today, nextYear", // 전년, 오늘, 내년
+			center : "prev, title, next", // 전월, 타이틀, 다음월
+			right : "month, agendaWeek, agendaDay" // 월간, 주간, 일간
+		},
+		//timezone : 'local',
+		//allDaySlot : true, // 하루종일 일정 표시 여부
+		selectable : true, // 선택가능여부
+		selectHelper : true,
+		editable : true, // 이벤트 수정가능여부
+		timeFormat: {
+	          agenda: 'H:mm{ - H:mm}',
+	          '': 'H:mm{ - H:mm}'
+	     },
+		/*events : {
+			url : '/Sida_prj/allEvent'
+		},*/
+		events : [
+		          {id:'3',
+		           title:'??',
+		        	 memo:'??1',
+		        	   start:'2016 01 01',
+		        	   end:null},
+		          {id:'4',
+		           title:'??',memo:'??2',start:'2015 12 10',end:'2016-01-04'},
+		          {id:'5',
+		           title:'1',memo:'??3',start:'2016/01/12 10:30',end:'2016/01/12 13:30', allDay: false},
+		          {id:'6',title:'2',memo:'??4',start:'2016-01-10 15:04',end:'2016-01-10 19:04',allDay: false}
+		           ],
+		/*
+		 * eventRender: function(event, element, view) { if (event.allDay ===
+		 * 'true') { event.allDay = true; alert("title "+event.title);
+		 * alert("allDay "+event.allDay); } else { event.allDay = false;
+		 * alert("title "+event.title); alert("allDay "+event.allDay); } },
+		 */
+		select : function(start, end) {
+			var title = prompt("Event Title:");
+			var eventData;
+			if (title) {
+				eventData = {
+					title : title,
+					start : start,
+					end : end
+				};
+				$('#calendar').fullCalendar('renderEvent', eventData, true); // stick?
+			}
+			$('#calendar').fullCalendar('unselect');
+		},
+		eventClick : function(event, jsEvent, view) {
+			$('#modalTitle').text(event.title);
+			// $('#startTime').attr('placeholder', new
+			// Date(event.start).format("yyyy/mm/dd"));
+			$('#startTime').attr('placeholder',moment(event.start).format("YYYY-MM-DD HH:mm"));
+			$('#endTime').attr('placeholder',moment(event.end).format("YYYY-MM-DD HH:mm"));
+			// $('#endTime').attr('placeholder', new
+			// Date(event.end).format("yyyy/mm/dd"));
+			$('#memo-txt').html(event.memo);
+			$('#fullCalModal').modal();
+		},
+		dayClick : {}
+	})
+});

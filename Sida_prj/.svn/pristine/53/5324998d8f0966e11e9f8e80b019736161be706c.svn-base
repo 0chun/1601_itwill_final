@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="mybatis.mapper.AddressBookMapper">
+ 	<resultMap id="addressBookResult" type="AddressBook">
+ 		<id property="ad_no" column="ad_no" />
+ 		<result property="ad_m_email" column="ad_m_email"/>
+ 		<result property="ad_first_name" column="ad_first_name"/>
+ 		<result property="ad_last_name" column="ad_last_name"/>
+ 		<result property="ad_company" column="ad_company"/>
+ 		<result property="ad_mnumber" column="ad_mnumber"/>
+ 		<result property="ad_hnumber" column="ad_hnumber"/>
+ 		<result property="ad_cnumber" column="ad_cnumber"/>
+ 		<result property="ad_address" column="ad_address"/>
+ 		<result property="ad_image" column="ad_image"/>
+ 		<result property="ad_bcard" column="ad_bcard"/>
+ 		<result property="ad_memo" column="ad_memo"/>
+ 	</resultMap>
+ 	
+ 	<select id="findAddress" parameterType="java.lang.String" resultMap="addressBookResult">
+ 		select * 
+ 		from addressbook
+ 		where ad_no=#{ad_no}
+ 	</select>
+ 	
+ 	<insert id="createAddress" parameterType="java.util.Map">
+ 		INSERT INTO ADDRESSBOOK (ad_no, ad_m_email, ad_first_name, ad_last_name, ad_company, ad_mnumber, ad_hnumber, ad_cnumber,
+ 								ad_address, ad_image, ad_bcard, ad_memo) 
+		VALUES (#{ad_no},#{ad_m_email},#{ad_first_name},#{ad_last_name},#{ad_company},#{ad_mnumber},#{ad_hnumber},
+								#{ad_cnumber},#{ad_address},#{ad_image},#{ad_bcard},#{ad_memo})
+ 	</insert>
+ 	<update id="updateAddress" parameterType="java.util.Map">
+ 		UPDATE ADDRESSBOOK 
+ 		SET ad_m_email=#{ad_m_email}, ad_first_name=#{ad_first_name}, ad_last_name=#{ad_last_name}, ad_company=#{ad_company},
+ 		 	ad_mnumber=#{ad_mnumber}, ad_hnumber=#{ad_hnumber}, ad_cnumber=#{ad_cnumber}, ad_address=#{ad_address}, ad_image=#{ad_image},
+ 		 	ad_bcard=#{ad_bcard},ad_memo=#{ad_memo}
+ 		WHERE ad_no=#{ad_no}
+ 	</update>
+ 	<delete id="deleteAddress" parameterType="java.lang.String">
+ 		DELETE FROM addressbook 
+ 		WHERE ad_no=#{ad_no}
+ 	</delete>
+ 	
+ </mapper>

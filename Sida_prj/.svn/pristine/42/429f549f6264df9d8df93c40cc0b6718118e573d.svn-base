@@ -1,0 +1,75 @@
+package com.itwill.sida.dao.impl;
+
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
+
+import com.itwill.sida.dao.AddressBookDao;
+import com.itwill.sida.dto.AddressBook;
+import com.itwill.util.MyBatisSqlSessionFactory;
+
+import mybatis.mapper.AddressBookMapper;
+
+@Component
+public class AddressBookDaoImpl implements AddressBookDao {
+	@Override
+	public AddressBook selectAddressOne(String ad_no){
+		SqlSession sqlSession = null;
+		AddressBook addressBook = null;
+		try{
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			addressBook = sqlSession.getMapper(AddressBookMapper.class).selectAddressOne(ad_no);
+			sqlSession.commit();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return addressBook;
+	}
+
+	@Override
+	public void createAddress(HashMap<String, String> cMap) {
+		SqlSession sqlSession = null;
+		try{
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			sqlSession.getMapper(AddressBookMapper.class).createAddress(cMap);
+			sqlSession.commit();
+		}finally{
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	@Override
+	public void updateAddress(HashMap<String, String> cMap) {
+		SqlSession sqlSession = null;
+		try{
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			sqlSession.getMapper(AddressBookMapper.class).updateAddress(cMap);
+			sqlSession.commit();
+		}finally{
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	@Override
+	public void deleteAddress(String ad_no) {
+		SqlSession sqlSession = null;
+		try{
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			sqlSession.getMapper(AddressBookMapper.class).deleteAddress(ad_no);
+			sqlSession.commit();
+		}finally{
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		
+	}
+	
+}

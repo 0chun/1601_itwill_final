@@ -1,0 +1,115 @@
+package com.itwill.sida.dto;
+
+public class Scheduler {
+	
+	private int s_no;
+	private String s_m_email;
+	private String s_type;
+	private String s_status;
+	private String s_loopType;
+	private String s_startDate;
+	private String s_endDate;
+	private int s_startTime;
+	private int s_endTime;
+	private String s_memo;
+	
+	public Scheduler() {}
+
+	public Scheduler(int s_no, String s_m_email, String s_type, String s_status, String s_loopType, String s_startdDate,
+			String s_endDate, int s_startTime, int s_endTime, String s_memo) {
+		super();
+		this.s_no = s_no;
+		this.s_m_email = s_m_email;
+		this.s_type = s_type;
+		this.s_status = s_status;
+		this.s_loopType = s_loopType;
+		this.s_startDate = s_startdDate;
+		this.s_endDate = s_endDate;
+		this.s_startTime = s_startTime;
+		this.s_endTime = s_endTime;
+		this.s_memo = s_memo;
+	}
+
+	public int getS_no() {
+		return s_no;
+	}
+
+	public void setS_no(int s_no) {
+		this.s_no = s_no;
+	}
+
+	public String getS_m_email() {
+		return s_m_email;
+	}
+
+	public void setS_m_email(String s_m_email) {
+		this.s_m_email = s_m_email;
+	}
+
+	public String getS_type() {
+		return s_type;
+	}
+
+	public void setS_type(String s_type) {
+		this.s_type = s_type;
+	}
+
+	public String getS_status() {
+		return s_status;
+	}
+
+	public void setS_status(String s_status) {
+		this.s_status = s_status;
+	}
+
+	public String getS_loopType() {
+		return s_loopType;
+	}
+
+	public void setS_loopType(String s_loopType) {
+		this.s_loopType = s_loopType;
+	}
+
+	public String getS_startdDate() {
+		return s_startDate;
+	}
+
+	public void setS_startdDate(String s_startdDate) {
+		this.s_startDate = s_startdDate;
+	}
+
+	public String getS_endDate() {
+		return s_endDate;
+	}
+
+	public void setS_endDate(String s_endDate) {
+		this.s_endDate = s_endDate;
+	}
+
+	public int getS_startTime() {
+		return s_startTime;
+	}
+
+	public void setS_startTime(int s_startTime) {
+		this.s_startTime = s_startTime;
+	}
+
+	public int getS_endTime() {
+		return s_endTime;
+	}
+
+	public void setS_endTime(int s_endTime) {
+		this.s_endTime = s_endTime;
+	}
+
+	public String getS_memo() {
+		return s_memo;
+	}
+
+	public void setS_memo(String s_memo) {
+		this.s_memo = s_memo;
+	}
+	
+	
+
+}

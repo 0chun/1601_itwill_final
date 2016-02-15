@@ -1,0 +1,199 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<html>
+<head>
+<script>
+	var flag = ${closeFlag};
+	if(flag){
+		window.opener.location.reload();
+		window.close();
+	}
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welcome to Sida</title>
+<link rel="shortcut icon" href="img/ico/favicon.png" />
+
+<!-- CSS -->
+<link
+	href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+	rel="stylesheet" type="text/css" />
+<link href="scripts/vendor/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="scripts/vendor/bootstrap-jasny/dist/extend/css/jasny-bootstrap.min.css"
+	rel="stylesheet" />
+<!--<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />-->
+<link href="scripts/vendor/font-awesome/css/font-awesome.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="scripts/vendor/bootstrap-daterangepicker/daterangepicker-bs3.css"
+	rel="stylesheet" type="text/css" />
+<link href="scripts/vendor/bootstrap-datepicker/css/datepicker.css"
+	rel="stylesheet" type="text/css" />
+<link href="scripts/vendor/select2/select2.css" rel="stylesheet"
+	type="text/css" />
+<link href="scripts/vendor/select2/select2-bootstrap.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="scripts/vendor/jquery.uniform/themes/default/css/uniform.default.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="scripts/css/prettify.css" rel="stylesheet" type="text/css" />
+<link href="scripts/vendor/fullcalendar/fullcalendar.css"
+	rel="stylesheet" />
+<link href="scripts/vendor/fullcalendar/fullcalendar.print.css"
+	rel="stylesheet" media="print" />
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.0/css/jquery.dataTables.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="scripts/css/ark.css" rel="stylesheet" type="text/css" />
+
+<!-- Remove this line on production-->
+<link href="scripts/css/examples.css" rel="stylesheet" type="text/css" />
+
+<!-- JS -->
+<script src="scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script src="scripts/vendor/jquery-ui/js/jquery-ui.min.js"></script>
+<script src="scripts/vendor/jquery.uniform/jquery.uniform.min.js"></script>
+<script src="scripts/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script
+	src="scripts/vendor/bootstrap-jasny/dist/extend/js/jasny-bootstrap.min.js"></script>
+<script src="scripts/vendor/jquery-autosize/jquery.autosize.min.js"></script>
+<script src="scripts/vendor/moment/min/moment.min.js"></script>
+<script
+	src="scripts/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script
+	src="scripts/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="scripts/vendor/dropzone/downloads/dropzone.min.js"></script>
+<script
+	src="scripts/vendor/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+<script src="scripts/vendor/jquery-flot/jquery.flot.js"></script>
+<script src="scripts/vendor/jquery-flot/jquery.flot.pie.js"></script>
+<script src="scripts/vendor/jquery-flot/jquery.flot.stack.js"></script>
+<script src="scripts/vendor/jquery-flot/jquery.flot.resize.js"></script>
+<script src="scripts/vendor/jquery-flot/jquery.flot.time.js"></script>
+<script src="scripts/vendor/jquery-flot/jquery.flot.navigate.js"></script>
+<script src="scripts/vendor/select2/select2.min.js"></script>
+<script src="scripts/vendor/fullcalendar/lib/moment.min.js"></script>
+<script src="scripts/vendor/fullcalendar/fullcalendar.min.js"></script>
+<script src="scripts/vendor/nestable/jquery.nestable.js"></script>
+<script src="scripts/vendor/ckeditor/ckeditor.js"></script>
+<script
+	src="https://google-code-prettify.googlecode.com/svn/loader/prettify.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.0/js/jquery.dataTables.min.js"></script>
+<script src="scripts/js/ark.min.js"></script>
+<!-- 달력 js 따로 만듬 by SYJ-->
+<script src="scripts/js/custom_cal.js"></script>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+<style type="text/css">
+body {
+	background-size: cover;
+	background-attachment: fixed;
+}
+</style>
+
+</head>
+<body style="margin-left: 5%; margin-right: 5%;">
+	<h3>Modifying</h3>
+	<form class="form-horizontal" role="form" action="editAddressBook"
+		method="post">
+		<input type="hidden" value="${addressBook.ad_no}" name="ad_no" />
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Name"
+									value="${addressBook.ad_name }" name="name">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="company"
+									value="${addressBook.ad_company }" name="company">
+							</div>
+						</div>
+						
+						
+						
+						<label for="inputEmail3" class="col-sm-2 control-label">Mobile</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Mobile"
+									value="${addressBook.ad_mnumber }" name="mobile">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Home Phones</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Home Phones"
+									value="${addressBook.ad_hnumber }" name="home_phones">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Extension Number </label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Extension Number(회사번호)"
+									value="${addressBook.ad_cnumber }" name="extension_number">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Address</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Address"
+									value="${addressBook.ad_address }" name="address">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Email"
+									value="${addressBook.ad_address }" name="email">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Card</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="명함사진"
+									value="${addressBook.ad_bcard }" name="card">
+							</div>
+						</div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Memo</label>
+						<div class="row-span">
+							<div class="col-sm-10" style="margin-bottom: 8px;">
+								<input type="text" placeholder="Memo"
+									value="${addressBook.ad_memo }" name="memo">
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

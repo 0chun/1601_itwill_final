@@ -1,0 +1,18 @@
+package com.itwill.sida.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itwill.sida.dto.AddressBook;
+
+public interface AddressBookService {
+	AddressBook getAddress(String ad_no);
+	void addressRegist(HashMap<String, String> cMap);
+	void editAddress(HashMap<String, String> cMap);
+	void deleteAddress(String ad_no);
+	ArrayList<AddressBook> getAddressList(String m_mail);
+	
+	ArrayList<AddressBook> findAddressByCompany(String ad_company);
+	ArrayList<AddressBook> findAddressByName(String ad_name);
+	ArrayList<AddressBook> findAddressByNumber(String ad_number);
+}

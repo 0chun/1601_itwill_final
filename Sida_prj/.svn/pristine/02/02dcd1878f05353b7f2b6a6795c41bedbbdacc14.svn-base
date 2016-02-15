@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<div class="body">
+	<section class="content">
+		<ol class="breadcrumb">
+			<li class="active"><i class="fa fa-home fa-fw"></i> Home</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">Money Book</h3>
+				<p class="header-info">Easily organize your expense</p>
+			</div>
+		</div>
+		<!-- CONTENT -->
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-5" style="margin-left: 5%; margin-right: 5%"></div>
+				<div class="col-md-7">
+					<h3>Budget</h3>
+					
+				
+				</div>
+			</div>
+		</div>
+		<!-- END: CONTENT -->
+	</section>
+</div>

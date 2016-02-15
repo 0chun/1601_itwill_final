@@ -1,0 +1,91 @@
+package com.itwill.sida.dao.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.itwill.sida.dao.MoneyBookDao;
+import com.itwill.sida.dto.MoneyBook;
+import com.itwill.util.MyBatisSqlSessionFactory;
+
+import mybatis.mapper.MoneyBookMapper;
+
+public class MoneyBookDaoImpl implements MoneyBookDao{
+
+	private SqlSession sqlSession;
+	
+	
+	public SqlSession getSqlSession() {
+		return sqlSession;
+	}
+
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
+
+	private static MoneyBookDao _instance;
+	public static MoneyBookDao getInstance(){
+		if(_instance==null){
+			_instance=new MoneyBookDaoImpl();
+		}
+		return _instance;
+	}
+	@Override
+	public MoneyBook findMoneyBookNo(int mb_no) {
+		SqlSession sqlSession=null;
+		MoneyBook findMoneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			findMoneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookNo(mb_no);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return findMoneyBook;
+	}
+
+	@Override
+	public List<MoneyBook> findMoneyBookAll() {
+		SqlSession sqlSession=null;
+		List<MoneyBook> moneyBookList = null;
+		
+		try{
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			moneyBookList = sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookAll();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return moneyBookList;
+	}
+
+	@Override
+	public List<Map<String, String>> findMoneyBookNoResult(int mb_no) {
+		SqlSession sqlSession = null;
+		List<Map<String, String>> moneyBookList = null;
+		
+		try{
+			sqlSession=MyBatisSqlSessionFactory.getSqlSession();
+			moneyBookList = sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookNoResult(mb_no);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return moneyBookList;
+	}
+	
+	
+
+}

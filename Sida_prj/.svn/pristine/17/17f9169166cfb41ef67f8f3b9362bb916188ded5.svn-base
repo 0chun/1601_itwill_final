@@ -1,0 +1,29 @@
+<div class="body">
+<section class="content">
+	<ol class="breadcrumb">
+	    <li class="active"><i class="fa fa-home fa-fw"></i> Home</li>
+	</ol>
+	
+	<div class="header">
+	    <div class="col-md-12">
+	        <h3 class="header-title">Card Registration</h3>
+	        <p class="header-info">Your new card registration</p>
+	    </div>
+	</div>
+<!-- CONTENT -->
+	<div class="main-content">
+	    <div class="row">
+	    	<div class="col-md-2">
+	    		카드 이름
+	    	</div>
+	    	<div class="col-md-2">
+	    		카드 테스트
+	    	</div>
+	    	<div class="col-md-2">
+	    		카드 테스트 2
+	    	</div>
+	    </div>
+	</div>
+<!-- END: CONTENT -->
+</section>
+</div>

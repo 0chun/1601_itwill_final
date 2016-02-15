@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	private int mb_no;
+	private String mb_m_email;
+	private String mb_date;
+	private String mb_category;
+	private int mb_income;
+	private int mb_outgo;
+	private String mb_outType;
+	private String mb_memo;
+
+ -->
+
+ <mapper namespace="mybatis.mapper.moneyBookMapper">
+ 	<resultMap id="moneyBookResult" type="moneyBook">
+ 		<id property="mb_no" column="mb_no" />
+ 		<result property="mb_m_email" column="mb_m_email"/>
+ 		<result property="mb_date" column="mb_date"/>
+ 		<result property="mb_category" column="mb_category"/>
+ 		<result property="mb_income" column="mb_income"/>
+ 		<result property="mb_outgo" column="mb_outgo"/>
+ 		<result property="mb_outType" column="mb_outType"/>
+ 		<result property="mb_memo" column="mb_memo"/>
+ 	</resultMap>
+ 	
+ 	<select id="findMoneyBookAll" resultMap="moneyBookResult">
+ 		select * from moneybook
+ 	</select>
+ 	<select id="findMoneyBookNo" parameterType="int" resultMap="moneyBookResult">
+		select * from moneybook where mb_no = #{mb_no}
+	</select>
+ </mapper>

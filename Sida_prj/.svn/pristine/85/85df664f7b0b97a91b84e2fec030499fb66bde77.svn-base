@@ -1,0 +1,14 @@
+package com.itwill.sida.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itwill.sida.dto.Card;
+
+public interface CardService {
+
+	void cardRegist(HashMap<String, String> cMap);
+
+	ArrayList<Card> getCardList(String m_email);
+
+}

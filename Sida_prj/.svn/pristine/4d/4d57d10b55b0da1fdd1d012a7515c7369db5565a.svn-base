@@ -1,0 +1,232 @@
+package com.itwill.sida.controller;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.sida.dto.Card;
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.dto.MoneyBook;
+import com.itwill.sida.service.CardService;
+import com.itwill.sida.service.MoneyBookService;
+
+@Controller
+public class IndexController {
+
+	@Autowired
+	MoneyBookService moneyBookService;
+	
+	@Autowired
+	CardService cardService;
+
+	@RequestMapping("/head_nav")
+	public String head_nav() {
+		return "";
+	}
+
+	@RequestMapping("/index")
+	public String index(Model model, HttpSession session) {
+		if (session.getAttribute("sMember") == null) {
+			return "redirect:login";
+		}
+		Member sMember = (Member) session.getAttribute("sMember");
+		ArrayList<HashMap<String, String>> moneyMap = new ArrayList<>();
+		try {
+			List<MoneyBook> mbList = moneyBookService.findMoneyBookEmailResult(sMember.getM_email());
+			for (MoneyBook arr : mbList) {
+				HashMap<String, String> mMap = new HashMap<String, String>();
+				mMap.put("mb_m_email", arr.getMb_m_email());
+				mMap.put("mb_date", arr.getMb_date());
+				mMap.put("mb_category", arr.getMb_category());
+				mMap.put("mb_income", arr.getMb_income() + "");
+				mMap.put("mb_outgo", arr.getMb_outgo() + "");
+				Pattern p = Pattern.compile("\\d+");
+				Matcher m = p.matcher(arr.getMb_outType());
+				if(m.matches()){
+					Card card = cardService.getCard(arr.getMb_outType());
+					mMap.put("c_no", card.getC_no()+"");
+					mMap.put("c_name", card.getC_name());
+				} else {
+					mMap.put("c_name", "현금");
+				}
+				mMap.put("mb_memo", arr.getMb_memo());
+				mMap.put("mb_date_result", getTimeGap(mMap.get("mb_date")));
+				moneyMap.add(mMap);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("head_nav_moneyList_size", moneyMap.size());
+		model.addAttribute("head_nav_moneyList", moneyMap);
+		model.addAttribute("path", "dashBoard.jsp");
+		return "index";
+	}
+
+	private String getTimeGap(String cardUseTime) {
+		Calendar currTime = Calendar.getInstance(); // 현재 시간
+		String[] time = cardUseTime.split("[ ]");
+		int use_Year = Integer.parseInt(time[0].split("[-]")[0]);
+		int use_Month = Integer.parseInt(time[0].split("[-]")[1]);
+		int use_Day = Integer.parseInt(time[0].split("[-]")[2]);
+		int use_Hour = Integer.parseInt(time[1].split("[:]")[0]);
+		int use_Minute = Integer.parseInt(time[1].split("[:]")[1]);
+
+		int curr_Year = currTime.get(Calendar.YEAR);
+		int curr_Month = currTime.get(Calendar.MONTH) + 1;
+		int curr_Day = currTime.get(Calendar.DAY_OF_MONTH);
+		int curr_Hour = currTime.get(Calendar.HOUR_OF_DAY);
+		int curr_Minute = currTime.get(Calendar.MINUTE);
+
+		int yearGap = (use_Year - curr_Year) * 365;
+		int monthGap = (use_Month - curr_Month);
+		int dayGap = (curr_Day - use_Day) + yearGap + monthGap;
+		int hourGap = (use_Hour - curr_Hour);
+		int minuteGap = (use_Minute - curr_Minute);
+
+		String printStr = "";
+		if (yearGap != 0) {
+			printStr += yearGap + "년 ";
+		}
+		if (dayGap != 0) {
+			printStr += dayGap + "일  ";
+		}
+		printStr += hourGap + "시간 ";
+		printStr += minuteGap + "분 전 ";
+		return printStr;
+	}
+
+	@RequestMapping("/calendar")
+	public String calendar(Model model) {
+		model.addAttribute("path", "calendar.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/charts")
+	public String charts(Model model) {
+		model.addAttribute("path", "charts.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/datatables")
+	public String datatables(Model model) {
+		model.addAttribute("path", "datatables.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/error_404")
+	public String error_404(Model model) {
+		model.addAttribute("path", "error_404.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/error_500")
+	public String error_500(Model model) {
+		model.addAttribute("path", "error_500.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/forgot")
+	public String forgot(Model model) {
+		return "forgot";
+	}
+
+	@RequestMapping("/forms")
+	public String forms(Model model) {
+		model.addAttribute("path", "forms.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/gallery")
+	public String gallery(Model model) {
+		model.addAttribute("path", "gallery.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/google_maps")
+	public String google_maps(Model model) {
+		model.addAttribute("path", "google_maps.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/grid")
+	public String grid(Model model) {
+		model.addAttribute("path", "grid.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/profile")
+	public String profile(Model model) {
+		return "profile";
+	}
+
+	@RequestMapping("/register")
+	public String register(Model model) {
+		return "register";
+	}
+
+	@RequestMapping("/search_results")
+	public String search_results(Model model) {
+		model.addAttribute("path", "search_results.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/tables")
+	public String tables(Model model) {
+		model.addAttribute("path", "tables.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/topnav")
+	public String topnav(Model model) {
+		model.addAttribute("path", "topnav.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/typography")
+	public String typography(Model model) {
+		model.addAttribute("path", "typography.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/ui_buttons")
+	public String ui_buttons(Model model) {
+		model.addAttribute("path", "ui_buttons.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/ui_components")
+	public String ui_components(Model model) {
+		model.addAttribute("path", "ui_components.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/ui_images")
+	public String ui_images(Model model) {
+		model.addAttribute("path", "ui_images.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/ui_nested_lists")
+	public String ui_nested_lists(Model model) {
+		model.addAttribute("path", "ui_nested_lists.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/wysiwyg_editor")
+	public String wysiwyg_editor(Model model) {
+		model.addAttribute("path", "wysiwyg_editor.jsp");
+		return "index";
+	}
+
+}

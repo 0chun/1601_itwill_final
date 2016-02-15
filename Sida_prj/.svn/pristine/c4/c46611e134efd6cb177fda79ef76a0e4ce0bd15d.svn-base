@@ -1,0 +1,103 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <script type="text/javascript">
+ $(function() {
+	 var idx = 1;
+	$("#f_keyword").focus(function(){
+		alert('text');
+	});
+	$("#addBtn").click(function(){
+		$('.listTemp').append("<div class='input-group'>"+
+				 "<span class='input-group-addon' id='basic-addon1'>"+(++idx)+"</span>"+
+				 "<input type='text' class='form-control' placeholder='Keyword' style='float:right;'>"+
+			 "</div>");
+	});
+ });
+</script>
+<div class="body">
+<section class="content">
+	<ol class="breadcrumb">
+	    <li class="active"><i class="fa fa-home fa-fw"></i> Home</li>
+	</ol>
+	
+	<div class="header">
+	    <div class="col-md-12">
+	        <h3 class="header-title">Card Registration</h3>
+	        <p class="header-info">Your new card registration</p>
+	    </div>
+	</div>
+<!-- CONTENT -->
+	<div class="main-content">
+		<div class="row">
+			<div class="col-md-5" style="margin-left: 5%; margin-right: 5%">
+	            <form role="form" id="f">
+	                <div class="form-group">
+	                    <label for="exampleInputEmail1">Name</label>
+	                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Card Name">
+	                </div>
+<!-- 	                <div class="form-group">
+	                    <label for="exampleInputPassword1">Company</label>
+	                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Card Company">
+	                </div> -->
+	                <span><label for="exampleInputEmail1">Company</label></span><br>
+	                <span class="dropdown">
+                    <select class="form-control select2">
+                        <option value="0">(Select Card Company)</option>
+                        <option value="1">국민카드</option>
+						<option value="2">BC카드</option>
+						<option value="3">삼성카드</option>
+						<option value="4">신한카드</option>
+						<option value="5">현대카드</option>
+						<option value="6">하나카드</option>
+						<option value="7">롯데/아멕스카드</option>
+						<option value="8">씨티카드</option>
+						<option value="9">신세계카드</option>
+						<option value="10">NH카드</option>
+						<option value="11">우리(평화)카드</option>
+						<option value="12">광주VISA카드</option>
+						<option value="13">산은캐피탈</option>
+						<option value="14">KDB산업은행카드</option>
+						<option value="15">전북은행카드</option>
+						<option value="16">제주은행카드</option>
+						<option value="17">우체국카드</option>
+						<option value="18">스탠다드차타드카드</option>
+						<option value="19">현대증권카드</option>
+						<option value="20">기업은행카드</option>
+                    </select>
+					</span>
+					<br>
+	                <br>
+	                
+	                <label for="exampleInputPassword1">Filter Keyword</label>
+		            <!-- Filter Keyword List : Start -->
+		            <div class="listTemp">
+			             <div class="input-group">
+							 <span class="input-group-addon" id="basic-addon1">1</span>
+							 <input type="text" class="form-control" placeholder="Keyword" style="float:right;">
+						 </div>
+					</div>
+					 <!-- Filter Keyword List : End -->
+					
+				    <button type="button" class="btn btn-primary" id="addBtn" style="margin-top: 3%;"><i class="fa fa-plus"></i> Add</button>
+				      
+	                <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox"> Use this card to the main card
+	                    </label>
+	                </div>
+	                 <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox"> This card to register for SMS
+	                    </label>
+	                </div>
+	                <button type="submit" class="btn btn-primary">Submit</button>
+	            </form>
+	        </div>
+	        <div class="col-md-5" style="margin-top: 5%;">
+	           <img class="img-rounded" alt="140x140" style="width: 200px; height: 200px; margin-left: 1%;" src="img/customImage/bank-cards.png">
+	        </div>
+        </div>
+	</div>
+<!-- END: CONTENT -->
+</section>
+</div>

@@ -1,0 +1,99 @@
+package com.itwill.sida.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.itwill.sida.dto.AddressBook;
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.service.AddressBookService;
+
+@Controller
+public class AddressBookController {
+	@Autowired
+	AddressBookService addressBookService;
+	
+	@RequestMapping("addressbook")
+	public String addressbook(Model model, HttpSession session){
+		String forwardPath = "index";
+		if ((Member) session.getAttribute("sMember") == null) {
+			return "redirect:login";
+		}
+		Member member = (Member) session.getAttribute("sMember");
+		ArrayList<AddressBook> addressBookList = addressBookService.getAddressList(member.getM_email());
+		
+		model.addAttribute("addressBookList", addressBookList);
+		model.addAttribute("path","addressbook.jsp");
+		return forwardPath;
+	}
+	
+	@RequestMapping("searchAddress")
+	public String searchAddress(@RequestParam(value="optionsRadios", required = false) int r_value, @RequestParam(value="s_text",required = false) String s_text,
+			Model model) {
+		String forwardPath = "index";
+		ArrayList<AddressBook> addressBookList = null;
+		if(r_value==1){
+			System.err.println(r_value+": company검색 if문 통과");
+			addressBookList = addressBookService.findAddressByCompany(s_text);
+		}else if(r_value==2){
+			System.err.println(r_value+": name검색 if문 통과");
+			
+			addressBookList = addressBookService.findAddressByName(s_text);
+		}else if(r_value==3){
+			System.err.println(r_value+": number검색  if문 통과");
+			addressBookList = addressBookService.findAddressByNumber(s_text);
+		}
+		
+		model.addAttribute("addressBookList", addressBookList);
+		model.addAttribute("path","addressbook.jsp");
+		return forwardPath;
+	}
+	@RequestMapping("editAddressBookForm")
+	public String editAddressBookForm(@RequestParam("ad_no") String ad_no, Model model){
+		String forwardPath = "editAddressBookForm";
+		AddressBook addressBook = addressBookService.getAddress(ad_no);
+		model.addAttribute("addressBook", addressBook);
+		return forwardPath;
+	}
+	
+	@RequestMapping("editAddressBook")
+	public String editAddressBook(	@RequestParam("ad_no") String ad_no,
+									@RequestParam(value="name", required=false) String name,
+									@RequestParam(value="company", required=false) String company,
+									@RequestParam(value="mobile", required=false) String mobile,
+									@RequestParam(value="home_phones", required=false) String home_phones,
+									@RequestParam(value="extension_number", required=false) String extension_number,
+									@RequestParam(value="address", required=false) String address,
+									@RequestParam(value="card", required=false) String card,
+									@RequestParam(value="memo", required=false) String memo,
+									Model model){
+		
+		String forwardPath = "editAddressBookForm";
+		HashMap<String, String> cMap = new HashMap<String, String>();
+		AddressBook addressBooks = addressBookService.getAddress(ad_no);
+		String email = addressBooks.getAd_m_email();
+		cMap.put("ad_m_email", email);
+		cMap.put("ad_name", name);
+		cMap.put("ad_company", company);
+		cMap.put("ad_mnumber", mobile);
+		cMap.put("ad_hnumber", home_phones);
+		cMap.put("ad_cnumber", extension_number);
+		cMap.put("ad_address", address);
+		cMap.put("ad_image", "널을 넣고싶습니다.");
+		cMap.put("ad_bcard", "널을 넣고싶습니다.");
+		cMap.put("ad_memo", memo);
+		cMap.put("ad_no", ad_no);
+		addressBookService.editAddress(cMap);
+		System.err.println(cMap);
+		model.addAttribute("closeFlag",true);
+		return forwardPath;
+	}
+}

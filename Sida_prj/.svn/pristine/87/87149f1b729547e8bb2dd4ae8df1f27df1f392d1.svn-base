@@ -1,0 +1,14 @@
+package com.itwill.sida.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.itwill.sida.dto.MoneyBook;
+
+public interface MoneyBookDao {
+	MoneyBook findMoneyBookNo(int mb_no);
+	List<MoneyBook> findMoneyBookAll();
+	List<Map<String, String>> findMoneyBookOutTypeResult(String mb_m_email, String mb_outType);
+	List<MoneyBook> findMoneyBookEmailResult(String mb_m_email);
+	MoneyBook findMoneyBookDate(String mb_m_email);
+}

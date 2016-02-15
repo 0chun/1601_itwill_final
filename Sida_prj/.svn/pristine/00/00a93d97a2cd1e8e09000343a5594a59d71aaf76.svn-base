@@ -1,0 +1,19 @@
+package com.itwill.sida.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.itwill.sida.dto.MoneyBook;
+
+public interface MoneyBookService {
+	MoneyBook findMoneyBookNo(int mb_no) throws Exception;
+	List<MoneyBook> findMoneyBookAll() throws Exception;
+	List<MoneyBook> findMoneyBookEmailResult(String mb_m_email) throws Exception;
+	List<MoneyBook> findMoneyBookDate(String mb_m_email) throws Exception;
+	List<MoneyBook> findMoneyBookDateExpense(String mb_date) throws Exception;
+	List<MoneyBook> findMoneyBookOutTypeResult(String mb_date) throws Exception;
+	//List<MoneyBook> findMinMaxSum(String search_value, String mb_m_email) throws Exception;
+	List<MoneyBook> findMinMaxSum(HashMap<String, String> map) throws Exception;
+	void insertMoneyBook(HashMap<String, String> mMap) throws Exception;
+}

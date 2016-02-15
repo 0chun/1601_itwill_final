@@ -1,0 +1,39 @@
+package com.itwill.sida.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.sida.dto.AddressBook;
+//수정중입니다
+@Component
+public class AddressBookController {
+	//AddressBookService addressBookService;
+	@RequestMapping("/")
+	public AddressBook selectAddressOne(AddressBook findAddrNo){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		AddressBook a = new AddressBook();
+		String sql = "select * from AddressBook where ad_no=?";
+		ResultSet rs = null;
+		try{
+			SqlSession session;
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, findAddrNo.getAd_no());
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return a;
+	}
+	
+}

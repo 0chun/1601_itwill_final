@@ -1,0 +1,37 @@
+package com.itwill.sida.controller;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.sida.dto.AddressBook;
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.service.AddressBookService;
+
+@Controller
+public class AddressBookController {
+	@Autowired
+	AddressBookService addressBookService;
+	
+	@RequestMapping("addressbook")
+	public String addressbook(Model model, HttpSession session){
+		String forwardPath = "index";
+		if ((Member) session.getAttribute("sMember") == null) {
+			return "redirect:login";
+		}
+		Member member = (Member) session.getAttribute("sMember");
+		ArrayList<AddressBook> addressBookList = addressBookService.getAddressList(member.getM_email());
+		
+		model.addAttribute("addressBookList", addressBookList);
+		model.addAttribute("path","addressbook.jsp");
+		return forwardPath;
+	}
+	
+	
+	
+}

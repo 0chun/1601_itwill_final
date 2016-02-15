@@ -1,0 +1,11 @@
+package com.itwill.sida.service;
+
+import java.util.List;
+
+import com.itwill.sida.dto.Scheduler;
+
+public interface SchedulerService {
+	
+	public List<Scheduler> selectAllSchedule();
+
+}

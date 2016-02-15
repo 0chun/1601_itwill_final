@@ -1,0 +1,21 @@
+package mybatis.mapper;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.itwill.sida.dto.MoneyBook;
+
+public interface MoneyBookMapper {
+	public MoneyBook findMoneyBookNo(int mb_no);
+	public List<MoneyBook> findMoneyBookAll();
+	public List<MoneyBook> findMoneyBookEmailResult(String mb_m_email);
+	public List<MoneyBook> findMoneyBookDate(String mb_m_email);
+	public List<MoneyBook> findMoneyBookDateExpense(String mb_date);
+	public List<MoneyBook> findMoneyBookOutTypeResult(String mb_date); //날짜별 지출형태
+	//public List<MoneyBook> findMinMaxSum(String search_value, String mb_m_email); //한달기준 처음 소비한 날짜~마지막날짜 or 한달 총사용 금액
+	public List<MoneyBook> findMinMaxSum(HashMap<String, String> map); //한달기준 처음 소비한 날짜~마지막날짜 or 한달 총사용 금액
+	
+	public void insertMoneyBook(HashMap<String, String> mMap); //삽입
+	
+}

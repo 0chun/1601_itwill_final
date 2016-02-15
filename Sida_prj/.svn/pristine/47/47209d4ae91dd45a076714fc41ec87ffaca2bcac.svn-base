@@ -1,0 +1,114 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<script type="text/javascript">
+	$(function() {
+		/*var date = new Date,
+		d = date.getDate(),
+		m = date.getMonth(),
+		y = date.getFullYear();*/
+		if ($("#calendar").length)
+			var calendar = $("#calendar").fullCalendar(
+					{
+						header : {
+							left : "prevYear, today, nextYear", //전년, 오늘, 내년
+							center : "prev, title, next", //전월, 타이틀, 다음월
+							right : "month, agendaWeek, agendaDay" //월간, 주간, 일간
+						},
+						timezone : 'local',
+						//firstDay: 1,	//시작일을 월요일로 
+						allDaySlot : true, //하루종일 일정 표시 여부
+						businessHours : true,//업무시간 표시 (점심시간 구분)
+						selectable : true, //선택가능여부
+						editable : true, //이벤트 수정가능여부
+						timeFormat : 'HH:mm ', // uppercase H for 24-hour clock 
+						agenda : 'HH:mm ', // 5:00 - 6:30
+						events : {
+							url : '/Sida_prj/allEvent'
+						},
+						/*eventRender: function(event, element, view) {
+						     if (event.allDay === 'true') {
+						    	 event.allDay = true;
+						    	 alert("title "+event.title);
+						    	 alert("allDay "+event.allDay);
+						     } else {
+						    	 event.allDay = false;
+						    	 alert("title "+event.title);
+						    	 alert("allDay "+event.allDay);
+						     }
+						 },*/
+						select : function(start, end) {
+							var title = prompt("Event Title:");
+							var eventData;
+							if (title) {
+								eventData = {
+									title : title,
+									start : start,
+									end : end
+								};
+								$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+							}
+							calendar.fullCalendar("unselect")
+						},
+						eventClick:  function(event, jsEvent, view) {
+				            $('#modalTitle').html(event.title);
+				            $('#modalBody').html(event.description);
+				            $('#startTime').html(event.start);
+				            $('#endTime').html(event.end);
+				            //$('#eventUrl').attr('href',event.url);
+				            $('#fullCalModal').modal();
+				        },
+						dayClick : {} 
+					})
+	});
+</script>
+<!-- BODY -->
+<div class="body">
+	<section class="content">
+
+		<ol class="breadcrumb">
+			<li><a href="index"><i class="fa fa-home fa-fw"></i>Home</a></li>
+			<li class="active">Calendar</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">달력</h3>
+				<p class="header-info">Easily organize your schedule</p>
+			</div>
+		</div>
+		
+		<!-- CONTENT -->
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="calendar"></div>
+				</div>
+				
+				<!-- modal  -->
+				<div id="fullCalModal" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span> <span class="sr-only">close</span>
+								</button>
+								<h4 id="modalTitle" class="modal-title"></h4>
+							</div>
+							<div id="modalBody" class="modal-body">
+								Start: <span id="startTime"></span><br> 
+								End: <span id="endTime"></span><br>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Save Change</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- END: CONTENT -->
+	</section>
+</div>
+<!-- END: BODY -->

@@ -1,0 +1,15 @@
+package com.itwill.sida.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class CardController {
+	@RequestMapping("registration") 
+	public String cardRegist(Model model){
+		String forwardPath="index";
+		model.addAttribute("path", "cardRegist.jsp");
+		return forwardPath;
+	}
+}

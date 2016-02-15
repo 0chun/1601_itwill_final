@@ -1,0 +1,103 @@
+package com.itwill.sida.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class IndexController {
+	@RequestMapping("/index")
+	public String index(Model model){
+		return "index";
+	}
+	
+	@RequestMapping("/calendar.html")
+	public String calendar(Model model){
+		return "calendar";
+	}
+	@RequestMapping("/charts.html")
+	public String charts(Model model){
+		return "charts";
+	}
+	@RequestMapping("/datatables.html")
+	public String datatables(Model model){
+		return "datatables";
+	}
+	@RequestMapping("/error_404.html")
+	public String error_404(Model model){
+		return "error_404";
+	}
+	@RequestMapping("/error_500.html")
+	public String error_500(Model model){
+		return "error_500";
+	}
+	@RequestMapping("/forgot.html")
+	public String forgot(Model model){
+		return "forgot";
+	}
+	@RequestMapping("/forms.html")
+	public String forms(Model model){
+		return "forms";
+	}
+	@RequestMapping("/gallery.html")
+	public String gallery(Model model){
+		return "gallery";
+	}
+	@RequestMapping("/google_maps.html")
+	public String google_maps(Model model){
+		return "google_maps";
+	}
+	@RequestMapping("/grid.html")
+	public String grid(Model model){
+		return "grid";
+	}
+	@RequestMapping("/login.html")
+	public String login(Model model){
+		return "login";
+	}
+	@RequestMapping("/profile.html")
+	public String profile(Model model){
+		return "profile";
+	}
+	@RequestMapping("/register.html")
+	public String register(Model model){
+		return "register";
+	}
+	@RequestMapping("/search_results.html")
+	public String search_results(Model model){
+		return "search_results";
+	}
+	@RequestMapping("/tables.html")
+	public String tables(Model model){
+		return "tables";
+	}
+	@RequestMapping("/topnav.html")
+	public String topnav(Model model){
+		return "topnav";
+	}
+	@RequestMapping("/typography.html")
+	public String typography(Model model){
+		return "typography";
+	}
+	@RequestMapping("/ui_buttons.html")
+	public String ui_buttons(Model model){
+		return "ui_buttons";
+	}
+	@RequestMapping("/ui_components.html")
+	public String ui_components(Model model){
+		return "ui_components";
+	}
+	@RequestMapping("/ui_images.html")
+	public String ui_images(Model model){
+		return "ui_images";
+	}
+	@RequestMapping("/ui_nested_lists.html")
+	public String ui_nested_lists(Model model){
+		return "ui_nested_lists";
+	}
+	@RequestMapping("/wysiwyg_editor.html")
+	public String wysiwyg_editor(Model model){
+		return "wysiwyg_editor";
+	}
+	
+}

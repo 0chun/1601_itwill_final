@@ -1,0 +1,86 @@
+package com.itwill.sida.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.sida.dto.MoneyBook;
+import com.itwill.sida.service.MoneyBookService;
+
+
+@Controller
+public class MoneyBookController {
+	@Autowired
+	MoneyBookService moneyBookService;
+	
+	
+	/*@RequestMapping("moneyBookAll")
+	public String findMoneyBookAll(@ModelAttribute("moneyBook") MoneyBook moneyBook, Model model){
+		String forwardPath="index";
+		List<MoneyBook> moneyBookList = null;
+		
+		try {
+			moneyBookList=moneyBookService.findMoneyBookAll();
+			System.err.println(moneyBookList);
+			model.addAttribute("path","expense.jsp");
+			model.addAttribute("moneyBookList",moneyBookList);
+		} catch (Exception e) {
+			forwardPath = "redirect:404error";
+		}
+		
+		
+		return forwardPath;
+		
+		
+	}*/
+	@RequestMapping("expense")
+	public String expense(@ModelAttribute("moneyBook") MoneyBook moneyBook,Model model){
+		String forwardPath="index";
+		List<MoneyBook> moneyBookList = null;
+		try {
+			moneyBookList=moneyBookService.findMoneyBookAll();
+			System.err.println(moneyBookList);
+			model.addAttribute("path","expense.jsp");
+			model.addAttribute("moneyBookList",moneyBookList);
+		} catch (Exception e) {
+			forwardPath = "redirect:404error";
+		}
+		
+		
+		return forwardPath;
+	}
+	
+	@RequestMapping("income")
+	public String income(Model model){
+		String forwardPath="index";
+		model.addAttribute("path","income.jsp");
+		return forwardPath;
+	}
+	
+	@RequestMapping("budget")
+	public String budget(Model model){
+		String forwardPath="index";
+		model.addAttribute("path","budget.jsp");
+		return forwardPath;
+	}
+	
+	@RequestMapping("dataStatistic")
+	public String dataStatistic(Model model){
+		String forwardPath="index";
+		model.addAttribute("path","dataStatistic.jsp");
+		return forwardPath;
+	}
+	
+	@RequestMapping("dataChart")
+	public String moneyBook(Model model){
+		String forwardPath="index";
+		model.addAttribute("path","dataChart.jsp");
+		return forwardPath;
+	}
+	
+}

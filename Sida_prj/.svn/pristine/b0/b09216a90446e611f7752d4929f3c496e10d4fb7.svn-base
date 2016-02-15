@@ -1,0 +1,14 @@
+package com.itwill.sida.dao.impl;
+
+public class SchedulerTestMain {
+
+	public static void main(String[] args) {
+		
+		SchedulerDaoImpl sDaoImpl = new SchedulerDaoImpl();
+		
+		//sDaoImpl.insertSchedule(insertMap);
+		System.out.println("dfdf");
+		System.out.println(sDaoImpl.selectAllSchedule());
+	}
+
+}

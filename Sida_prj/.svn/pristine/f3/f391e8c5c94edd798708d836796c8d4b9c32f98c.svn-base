@@ -1,0 +1,9 @@
+package com.itwill.sida.service;
+
+import java.util.HashMap;
+
+public interface CardService {
+
+	void cardRegist(HashMap<String, String> cMap);
+
+}

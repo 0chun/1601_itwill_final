@@ -1,0 +1,32 @@
+package com.itwill.sida.dao.impl;
+
+import java.util.HashMap;
+
+import org.springframework.stereotype.Component;
+
+import com.itwill.sida.dao.MemberDao;
+import com.itwill.sida.dto.Member;
+
+@Component
+public class MemberDaoImpl implements MemberDao {
+
+	@Override
+	public Member findEmail(String email) {
+		//Member findMember = memberMappers.selectByEmail(email);
+		return null;
+	}
+
+	@Override
+	public Member getMember(String email, String pwd) {
+		HashMap<String, String> pMap = new HashMap<String, String>();
+		pMap.put("m_email", email);
+		pMap.put("m_pwd", pwd);
+		//Member findMember = memberMappers.selectMember(pMap);
+		return null;
+	}
+
+	@Override
+	public Member selectByMemberId(String m_id) throws Exception {
+		return null;
+	}
+}

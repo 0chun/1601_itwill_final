@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<script type="text/javascript">
+	$(function() {
+
+	});
+</script>
+<div class="body">
+	<section class="content">
+		<ol class="breadcrumb">
+			<li class="active"><i class="fa fa-home fa-fw"></i> Home</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">Card Registration</h3>
+				<p class="header-info">Your new card registration</p>
+			</div>
+		</div>
+		<!-- CONTENT -->
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>My Card List</h3>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Company</th>
+								<th>keyWord</th>
+								<th>MainCard</th>
+								<th>SMS</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Jun 14, 2013</td>
+								<td><a href="#">Sylvia Stingray</a></td>
+								<td><span class="label label-success">Delivered</span></td>
+								<td>$2,643.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+							<tr>
+								<td>Feb 8, 2013</td>
+								<td><a href="#">Jennifer Garner</a></td>
+								<td><span class="label label-primary">Completed</span></td>
+								<td>$1,392.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+							<tr>
+								<td>Dec 21, 2013</td>
+								<td><a href="#">Wilma Penaflor</a></td>
+								<td><span class="label label-warning">Pending</span></td>
+								<td>$2,990.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+							<tr>
+								<td>Ian 12, 2013</td>
+								<td><a href="#">Richard Leigh</a></td>
+								<td><span class="label label-default">Canceled</span></td>
+								<td>$3,847.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+							<tr>
+								<td>Ian 17, 2013</td>
+								<td><a href="#">Cori Bradley</a></td>
+								<td><span class="label label-success">Delivered</span></td>
+								<td>$1,744.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+							<tr>
+								<td>Aug 2, 2013</td>
+								<td><a href="#">Roy Brookins</a></td>
+								<td><span class="label label-warning">Pending</span></td>
+								<td>$5,123.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+							<tr>
+								<td>Sep 27, 2013</td>
+								<td><a href="#">Brenda McConnell</a></td>
+								<td><span class="label label-primary">Completed</span></td>
+								<td>$4,233.00</td>
+								<td><a href="#">Edit</a> <a href="#">Delete</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="pagination pagination-sm">
+						<li class="disabled"><a href="#">&laquo;</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- END: CONTENT -->
+	</section>
+</div>

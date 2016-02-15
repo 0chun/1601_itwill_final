@@ -1,0 +1,9 @@
+package com.itwill.sida.dao;
+
+import com.itwill.sida.dto.Member;
+
+public interface MemberDao {
+	public Member selectByMemberId(String m_id) throws Exception;
+	public Member findEmail(String email);
+	public Member getMember(String email, String pwd);
+}

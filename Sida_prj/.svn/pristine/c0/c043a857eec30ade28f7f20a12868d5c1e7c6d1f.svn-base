@@ -1,0 +1,131 @@
+package com.itwill.sida.dto;
+
+public class Scheduler {
+	
+	private int s_no;
+	private String s_m_email;
+	private String s_type;
+	private String s_status;
+	private String s_looptype;
+	private String s_startdate;
+	private String s_enddate;
+	private int s_starttime;
+	private int s_endtime;
+	private String s_title;
+	private String s_memo;
+	
+	public Scheduler() {}
+
+	public Scheduler(int s_no, String s_m_email, String s_type, String s_status, String s_loopType, String s_startdDate,
+			String s_endDate, int s_startTime, int s_endTime, String s_title, String s_memo) {
+		super();
+		this.s_no = s_no;
+		this.s_m_email = s_m_email;
+		this.s_type = s_type;
+		this.s_status = s_status;
+		this.s_looptype = s_loopType;
+		this.s_startdate = s_startdDate;
+		this.s_enddate = s_endDate;
+		this.s_starttime = s_startTime;
+		this.s_endtime = s_endTime;
+		this.s_title = s_title;
+		this.s_memo = s_memo;
+	}
+
+	public int getS_no() {
+		return s_no;
+	}
+
+	public void setS_no(int s_no) {
+		this.s_no = s_no;
+	}
+
+	public String getS_m_email() {
+		return s_m_email;
+	}
+
+	public void setS_m_email(String s_m_email) {
+		this.s_m_email = s_m_email;
+	}
+
+	public String getS_type() {
+		return s_type;
+	}
+
+	public void setS_type(String s_type) {
+		this.s_type = s_type;
+	}
+
+	public String getS_status() {
+		return s_status;
+	}
+
+	public void setS_status(String s_status) {
+		this.s_status = s_status;
+	}
+
+	public String getS_loopType() {
+		return s_looptype;
+	}
+
+	public void setS_loopType(String s_loopType) {
+		this.s_looptype = s_loopType;
+	}
+
+	public String getS_startdDate() {
+		return s_startdate;
+	}
+
+	public void setS_startdDate(String s_startdDate) {
+		this.s_startdate = s_startdDate;
+	}
+
+	public String getS_endDate() {
+		return s_enddate;
+	}
+
+	public void setS_endDate(String s_endDate) {
+		this.s_enddate = s_endDate;
+	}
+
+	public int getS_startTime() {
+		return s_starttime;
+	}
+
+	public void setS_startTime(int s_startTime) {
+		this.s_starttime = s_startTime;
+	}
+
+	public int getS_endTime() {
+		return s_endtime;
+	}
+
+	public void setS_endTime(int s_endTime) {
+		this.s_endtime = s_endTime;
+	}
+	
+	public String getS_title() {
+		return s_title;
+	}
+
+	public void setS_title(String s_title) {
+		this.s_title = s_title;
+	}
+
+	public String getS_memo() {
+		return s_memo;
+	}
+
+	public void setS_memo(String s_memo) {
+		this.s_memo = s_memo;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Scheduler [s_no=" + s_no + ", s_m_email=" + s_m_email + ", s_type=" + s_type + ", s_status=" + s_status 
+				+ ", s_loopType=" + s_looptype + ", s_startDate=" + s_startdate + ", s_endDate=" + s_enddate + ", s_startTime=" + s_starttime 
+				+ ", s_endTime=" + s_endtime + ", s_title=" + s_title + ", s_memo=" + s_memo + "]";
+	}
+
+}

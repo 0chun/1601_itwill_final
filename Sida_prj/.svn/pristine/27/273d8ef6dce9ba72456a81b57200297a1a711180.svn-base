@@ -1,0 +1,88 @@
+ <script type="text/javascript">
+ $(function() {
+	 var idx = 1;
+	$("#f_keyword").focus(function(){
+		alert('text');
+	});
+	$("#addBtn").click(function(){
+		$('.listTemp').append("<div class='input-group'>"+
+				 "<span class='input-group-addon' id='basic-addon1'>"+(++idx)+"</span>"+
+				 "<input type='text' class='form-control' placeholder='Keyword' style='float:right;'>"+
+			 "</div>");
+	});
+ });
+</script>
+<div class="body">
+<section class="content">
+	<ol class="breadcrumb">
+	    <li class="active"><i class="fa fa-home fa-fw"></i> Home</li>
+	</ol>
+	
+	<div class="header">
+	    <div class="col-md-12">
+	        <h3 class="header-title">Card Registration</h3>
+	        <p class="header-info">Your new card registration</p>
+	    </div>
+	</div>
+<!-- CONTENT -->
+	<div class="main-content">
+		<div class="row">
+			<div class="col-md-5" style="margin-left: 5%; margin-right: 5%">
+	            <form role="form" id="f">
+	                <div class="form-group">
+	                    <label for="exampleInputEmail1">Name</label>
+	                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Card Name">
+	                </div>
+<!-- 	                <div class="form-group">
+	                    <label for="exampleInputPassword1">Company</label>
+	                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Card Company">
+	                </div> -->
+	                <span><label for="exampleInputEmail1">Company</label></span><br>
+	                <span class="dropdown">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+					    Select Card Company
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+					  </ul>
+					</span>
+					<br>
+	                <br>
+	                
+	                <label for="exampleInputPassword1">Filter Keyword</label>
+		            <!-- Filter Keyword List : Start -->
+		            <div class="listTemp">
+			             <div class="input-group">
+							 <span class="input-group-addon" id="basic-addon1">1</span>
+							 <input type="text" class="form-control" placeholder="Keyword" style="float:right;">
+						 </div>
+					</div>
+					 <!-- Filter Keyword List : End -->
+					
+				    <button type="button" class="btn btn-primary" id="addBtn" style="margin-top: 3%;"><i class="fa fa-plus"></i> Add</button>
+				      
+	                <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox"> Use this card to the main card
+	                    </label>
+	                </div>
+	                 <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox"> This card to register for SMS
+	                    </label>
+	                </div>
+	                <button type="submit" class="btn btn-primary">Submit</button>
+	            </form>
+	        </div>
+	        <div class="col-md-5" style="margin-top: 5%;">
+	           <img class="img-rounded" alt="140x140" style="width: 200px; height: 200px; margin-left: 1%;" src="img/customImage/bank-cards.png">
+	        </div>
+        </div>
+	</div>
+<!-- END: CONTENT -->
+</section>
+</div>

@@ -1,0 +1,14 @@
+package com.itwill.sida.service.impl;
+
+import org.springframework.stereotype.Controller;
+
+import com.itwill.sida.dto.Card;
+
+@Controller
+public class CardServiceImpl {
+	
+	
+	public void cardRegist(Card card){
+		
+	}
+}

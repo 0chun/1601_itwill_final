@@ -1,0 +1,135 @@
+package com.itwill.sida.dto;
+
+public class AddressBook {
+	
+	private int ad_no;
+	private String ad_m_email;
+	private String ad_first_name;
+	private String ad_last_name;
+	private String ad_company;
+	private String ad_mnumber;
+	private String ad_hnumber;
+	private String ad_cnumber;
+	private String ad_address;
+	private String ad_image;
+	private String ad_bcard;
+	private String ad_memo;
+
+	public AddressBook() {}
+
+	public AddressBook(int ad_no, String ad_m_email, String ad_first_name, String ad_last_name, String ad_company,
+			String ad_mnumber, String ad_hnumber, String ad_cnumber, String ad_address, String ad_image,
+			String ad_bcard, String ad_memo) {
+		super();
+		this.ad_no = ad_no;
+		this.ad_m_email = ad_m_email;
+		this.ad_first_name = ad_first_name;
+		this.ad_last_name = ad_last_name;
+		this.ad_company = ad_company;
+		this.ad_mnumber = ad_mnumber;
+		this.ad_hnumber = ad_hnumber;
+		this.ad_cnumber = ad_cnumber;
+		this.ad_address = ad_address;
+		this.ad_image = ad_image;
+		this.ad_bcard = ad_bcard;
+		this.ad_memo = ad_memo;
+	}
+
+	public int getAd_no() {
+		return ad_no;
+	}
+
+	public void setAd_no(int ad_no) {
+		this.ad_no = ad_no;
+	}
+
+	public String getAd_m_email() {
+		return ad_m_email;
+	}
+
+	public void setAd_m_email(String ad_m_email) {
+		this.ad_m_email = ad_m_email;
+	}
+
+	public String getAd_first_name() {
+		return ad_first_name;
+	}
+
+	public void setAd_first_name(String ad_first_name) {
+		this.ad_first_name = ad_first_name;
+	}
+
+	public String getAd_last_name() {
+		return ad_last_name;
+	}
+
+	public void setAd_last_name(String ad_last_name) {
+		this.ad_last_name = ad_last_name;
+	}
+
+	public String getAd_company() {
+		return ad_company;
+	}
+
+	public void setAd_company(String ad_company) {
+		this.ad_company = ad_company;
+	}
+
+	public String getAd_mnumber() {
+		return ad_mnumber;
+	}
+
+	public void setAd_mnumber(String ad_mnumber) {
+		this.ad_mnumber = ad_mnumber;
+	}
+
+	public String getAd_hnumber() {
+		return ad_hnumber;
+	}
+
+	public void setAd_hnumber(String ad_hnumber) {
+		this.ad_hnumber = ad_hnumber;
+	}
+
+	public String getAd_cnumber() {
+		return ad_cnumber;
+	}
+
+	public void setAd_cnumber(String ad_cnumber) {
+		this.ad_cnumber = ad_cnumber;
+	}
+
+	public String getAd_address() {
+		return ad_address;
+	}
+
+	public void setAd_address(String ad_address) {
+		this.ad_address = ad_address;
+	}
+
+	public String getAd_image() {
+		return ad_image;
+	}
+
+	public void setAd_image(String ad_image) {
+		this.ad_image = ad_image;
+	}
+
+	public String getAd_bcard() {
+		return ad_bcard;
+	}
+
+	public void setAd_bcard(String ad_bcard) {
+		this.ad_bcard = ad_bcard;
+	}
+
+	public String getAd_memo() {
+		return ad_memo;
+	}
+
+	public void setAd_memo(String ad_memo) {
+		this.ad_memo = ad_memo;
+	}
+	
+	
+}

@@ -1,0 +1,179 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<style type="text/css">
+	.form-inline .form-group input {
+		width:200px;
+	}
+	.form-inline .form-group .control-label1 {
+		width:40px;
+	}
+	.form-inline .form-group .control-label {
+		width:80px;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#calendar").fullCalendar({
+		header : {
+			left : "prevYear, today, nextYear", // 전년, 오늘, 내년
+			center : "prev, title, next", // 전월, 타이틀, 다음월
+			right : "month, agendaWeek, agendaDay" // 월간, 주간, 일간
+		},
+		slotMinutes: 15,
+		selectable : true, // 선택가능여부
+		//selectHelper : true, 
+		editable : true, // 이벤트 수정가능여부
+		timeFormat: {
+	          agenda: 'H:mm{ - H:mm}',
+	          '': 'H:mm{ - H:mm}'
+	     },
+		events : {			//이벤트 소스
+			url : 'selectById'
+		},
+		eventRender: function(event, element) { 
+			if (event.allDay === 'false') { 
+				event.allDay = false;
+			} 
+		},
+		select : function(start, end, allDay) {
+			var title = prompt("Event Title:");
+			var eventData;
+			if (title) {
+				eventData = {
+					title : title,
+					start : start,
+					end : end,
+					allDay : allDay
+				};
+				//$('#calendar').fullCalendar('renderEvent', eventData, true);		//modal에서 저장 완료 후에 renderEvent 하도록
+				$('#modalTitle').html(eventData.title);
+				$('#start').val($.fullCalendar.formatDate(eventData.start, "yyyy-MM-dd"));
+				$('#startTime').val($.fullCalendar.formatDate(eventData.start, "HH:mm"));
+				$('#end').val($.fullCalendar.formatDate(eventData.end, "yyyy-MM-dd"));
+				$('#endTime').val($.fullCalendar.formatDate(eventData.end, "HH:mm"));
+				
+				$('#fullCalModal').modal();
+			}
+			$('#calendar').fullCalendar('unselect');
+		},
+		eventClick : function(event, jsEvent, view) {
+			$('#modalTitle').html(event.title);
+			$('#start').val($.fullCalendar.formatDate(event.start, "yyyy-MM-dd"));
+			$('#startTime').val($.fullCalendar.formatDate(event.start, "HH:mm"));
+			$('#end').val($.fullCalendar.formatDate(event.end, "yyyy-MM-dd"));
+			$('#endTime').val($.fullCalendar.formatDate(event.end, "HH:mm"));
+			$('#memo-txt').val(event.memo);
+			$('#eventId').val(event.id);
+			$('#fullCalModal').modal();
+			
+			$('.removeBtn').click(function (event) {	
+	            var id = $('#eventId').val();
+	            	$.ajax({
+	            		url : 'delete',
+	            		type : 'POST',
+	            		data : {'s_no':id}
+	            	});
+	            $('#calendar').fullCalendar('removeEvents', id);
+	            $('#fullCalModal').modal('hide');
+	            $('#calendar').fullCalendar('renderEvent', event, true);
+	        });
+
+	        $('.saveBtn').click(function (event) {	//modal : save
+	            //console.log(event);
+	            var id = $('#eventId').val();
+	            var start = $('#start').val() + ' ' + $('#startTime').val(); //2016-01-10 15:00
+	            var end = $('#end').val() + ' ' + $('#endTime').val();
+	            
+	            
+	            
+	            var ev = $("#calendar").fullCalendar('clientEvents', id);
+	            //ev[0].backgroundColor = 'green';
+	            $('#fullCalModal').modal('hide');
+	            $('#calendar').fullCalendar('renderEvent', event, true);
+	        });
+		}
+		
+ 	})
+});
+
+</script>
+
+<!-- BODY -->
+<div class="body">
+	<section class="content">
+
+		<ol class="breadcrumb">
+			<li><a href="index"><i class="fa fa-home fa-fw"></i>Home</a></li>
+			<li class="active">Calendar</li>
+		</ol>
+
+		<div class="header">
+			<div class="col-md-12">
+				<h3 class="header-title">달력</h3>
+				<p class="header-info">Easily organize your schedule</p>
+			</div>
+		</div>
+		
+		<!-- CONTENT -->
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="calendar"></div>
+				</div>
+				
+				<!-- modal  -->
+				<div id="fullCalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span> 
+								</button>
+								<h4 id="modalTitle" class="modal-title"></h4>
+							</div>
+							<div id="modalBody" class="modal-body">
+								
+									<form class="form-inline" width= "50">
+										<div class="form-group">
+											<label for="start" class="control-label1">Start:</label>
+											<input type="date" class="form-control" id="start"></span>
+										</div>
+										<div class="form-group" >
+											<label for="startTime" class="control-label">Start Time:</label>
+											<input type=time class="form-control" id="startTime">
+										</div>
+									</form>
+									<form class="form-inline" width= "auto">
+										<div class="form-group">
+											<label for="end" class="control-label1">End: </label>
+											<input type="date" class="form-control" id="end">
+										</div>
+										<div class="form-group">
+											<label for="endTime" class="control-label">End Time:</label>
+											<input type="time" class="form-control" id="endTime">
+										</div>
+									</form>
+									<div >
+										<label for="memo-txt" class="control-label">Memo:</label>
+										<textarea class="form-control" id="memo-txt"></textarea>
+									</div>
+								
+								
+								
+							</div>
+							<div class="modal-footer">
+								<input type="hidden" id="eventId"/>
+								<button type="button" class="btn btn-primary saveBtn">Save</button>
+								<button type="button" class="btn btn-primary removeBtn">Remove Event</button>
+								<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- END: CONTENT -->
+	</section>
+</div>
+<!-- END: BODY -->

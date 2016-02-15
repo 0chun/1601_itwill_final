@@ -1,0 +1,15 @@
+package mybatis.mapper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itwill.sida.dto.AddressBook;
+
+public interface AddressBookMapper {
+	AddressBook selectAddressOne(String ad_no);
+	void createAddress(HashMap<String, String> cMap);
+	void updateAddress(HashMap<String, String> cMap);
+	void deleteAddress(String ad_no);
+	ArrayList<AddressBook> selectAddressList(String m_email);
+
+}

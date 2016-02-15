@@ -1,0 +1,122 @@
+package com.itwill.sida.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class IndexController {
+	@RequestMapping("/index")
+	public String index(Model model, HttpSession session){
+		if(session.getAttribute("sMember")==null){
+			return "redirect:login";
+		}
+		model.addAttribute("path", "dashBoard.jsp");
+		return "index";
+	}
+	@RequestMapping("/calendar")
+	public String calendar(Model model){
+		model.addAttribute("path", "calendar.jsp");
+		return "index";
+	}
+	@RequestMapping("/charts")
+	public String charts(Model model){
+		model.addAttribute("path", "charts.jsp");
+		return "index";
+	}
+	@RequestMapping("/datatables")
+	public String datatables(Model model){
+		model.addAttribute("path", "datatables.jsp");
+		return "index";
+	}
+	@RequestMapping("/error_404")
+	public String error_404(Model model){
+		model.addAttribute("path", "error_404.jsp");
+		return "index";
+	}
+	@RequestMapping("/error_500")
+	public String error_500(Model model){
+		model.addAttribute("path", "error_500.jsp");
+		return "index";
+	}
+	@RequestMapping("/forgot")
+	public String forgot(Model model){
+		return "forgot";
+	}
+	@RequestMapping("/forms")
+	public String forms(Model model){
+		model.addAttribute("path", "forms.jsp");
+		return "index";
+	}
+	@RequestMapping("/gallery")
+	public String gallery(Model model){
+		model.addAttribute("path", "gallery.jsp");
+		return "index";
+	}
+	@RequestMapping("/google_maps")
+	public String google_maps(Model model){
+		model.addAttribute("path", "google_maps.jsp");
+		return "index";
+	}
+	@RequestMapping("/grid")
+	public String grid(Model model){
+		model.addAttribute("path", "grid.jsp");
+		return "index";
+	}
+	@RequestMapping("/profile")
+	public String profile(Model model){
+		return "profile";
+	}
+	@RequestMapping("/register")
+	public String register(Model model){
+		return "register";
+	}
+	@RequestMapping("/search_results")
+	public String search_results(Model model){
+		model.addAttribute("path", "search_results.jsp");
+		return "index";
+	}
+	@RequestMapping("/tables")
+	public String tables(Model model){
+		model.addAttribute("path", "tables.jsp");
+		return "index";
+	}
+	@RequestMapping("/topnav")
+	public String topnav(Model model){
+		model.addAttribute("path", "topnav.jsp");
+		return "index";
+	}
+	@RequestMapping("/typography")
+	public String typography(Model model){
+		model.addAttribute("path", "typography.jsp");
+		return "index";
+	}
+	@RequestMapping("/ui_buttons")
+	public String ui_buttons(Model model){
+		model.addAttribute("path", "ui_buttons.jsp");
+		return "index";
+	}
+	@RequestMapping("/ui_components")
+	public String ui_components(Model model){
+		model.addAttribute("path", "ui_components.jsp");
+		return "index";
+	}
+	@RequestMapping("/ui_images")
+	public String ui_images(Model model){
+		model.addAttribute("path", "ui_images.jsp");
+		return "index";
+	}
+	@RequestMapping("/ui_nested_lists")
+	public String ui_nested_lists(Model model){
+		model.addAttribute("path", "ui_nested_lists.jsp");
+		return "index";
+	}
+	@RequestMapping("/wysiwyg_editor")
+	public String wysiwyg_editor(Model model){
+		model.addAttribute("path", "wysiwyg_editor.jsp");
+		return "index";
+	}
+	
+}

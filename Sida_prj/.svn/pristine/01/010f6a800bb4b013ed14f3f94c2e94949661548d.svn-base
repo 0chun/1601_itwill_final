@@ -1,0 +1,57 @@
+package com.itwill.sida.controller;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.itwill.sida.dto.Scheduler;
+import com.itwill.sida.service.SchedulerService;
+
+@Controller
+public class SchedulerController {
+	
+	@Autowired
+	SchedulerService schedulerService;
+	@RequestMapping(value= "/allEvent", method=RequestMethod.GET)
+	@ResponseBody
+	public String selectAll(Model model){
+		
+		String forwardPath="index";
+		StringBuffer sb=new StringBuffer();
+		HashMap<String, Object> scMap = new HashMap<String, Object>();
+		List<Scheduler> scList = schedulerService.selectAllSchedule();
+		
+		sb.append("[");
+		for (int i = 0; i < scList.size(); i++) {
+			Scheduler tempSc = scList.get(i);
+			/*scMap.put("allDay","false");
+			scMap.put("editable","false");
+			scMap.put("id",tempSc.getS_no());
+			scMap.put("title",tempSc.getS_title());
+			scMap.put("start",tempSc.getS_startdDate());
+			scMap.put("end",tempSc.getS_endDate());*/
+			
+			sb.append("{\"id\":\""+tempSc.getS_no()+
+					"\",\"title\":\""+tempSc.getS_title()+
+					"\",\"start\":\""+tempSc.getS_startdDate()+
+					"\",\"end\":\""+tempSc.getS_endDate()+"\"}"
+					);
+			if(i!=(scList.size()-1)){
+				sb.append(",");
+			}
+		}
+		sb.append("]");
+		
+		//model.addAttribute("path", "index");
+		//model.addAttribute(scList);
+		return sb.toString();
+	}
+	
+	
+}

@@ -1,0 +1,18 @@
+package com.itwill.sida.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itwill.sida.dto.AddressBook;
+
+public interface AddressBookDao {
+	AddressBook selectAddressOne(String ad_no);
+	void createAddress(HashMap<String, String> cMap);
+	void updateAddress(HashMap<String, String> cMap);
+	void deleteAddress(String ad_no);
+	ArrayList<AddressBook> getAddressBookList(String m_email);
+	ArrayList<AddressBook> findAddressByCompany(String ad_company);
+	ArrayList<AddressBook> findAddressByName(String ad_name);
+	ArrayList<AddressBook> findAddressByNumber(String ad_number);
+
+}

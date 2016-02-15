@@ -1,0 +1,5 @@
+package com.itwill.sida.dao;
+
+public interface SchedulerDao {
+
+}

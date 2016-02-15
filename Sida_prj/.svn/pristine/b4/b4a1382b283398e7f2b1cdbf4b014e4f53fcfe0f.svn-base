@@ -1,0 +1,217 @@
+package com.itwill.sida.dao.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.itwill.sida.dao.MoneyBookDao;
+import com.itwill.sida.dto.MoneyBook;
+import com.itwill.util.MyBatisSqlSessionFactory;
+
+import mybatis.mapper.MoneyBookMapper;
+
+public class MoneyBookDaoImpl implements MoneyBookDao{
+
+	private SqlSession sqlSession;
+	
+	
+	public SqlSession getSqlSession() {
+		return sqlSession;
+	}
+
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
+
+	private static MoneyBookDao _instance;
+	public static MoneyBookDao getInstance(){
+		if(_instance==null){
+			_instance=new MoneyBookDaoImpl();
+		}
+		return _instance;
+	}
+	@Override
+	public MoneyBook findMoneyBookNo(int mb_no) {
+		SqlSession sqlSession=null;
+		MoneyBook findMoneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			findMoneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookNo(mb_no);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return findMoneyBook;
+	}
+
+	@Override
+	public List<MoneyBook> findMoneyBookAll() {
+		SqlSession sqlSession=null;
+		List<MoneyBook> moneyBookList = null;
+		
+		try{
+			sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+			moneyBookList = sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookAll();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return moneyBookList;
+	}
+
+
+	/*@Override
+	public List<Map<String, String>> findMoneyBookOutTypeResult(String mb_m_email, String mb_outType) {
+		SqlSession sqlSession = null;
+		List<Map<String, String>> moneyBookList = null;
+		
+		try{
+			sqlSession=MyBatisSqlSessionFactory.getSqlSession();
+			moneyBookList = sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookOutTypeResult(mb_m_email, mb_outType);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return moneyBookList;
+	}
+*/
+	@Override
+	public List<MoneyBook> findMoneyBookEmailResult(String mb_m_email) {
+		SqlSession sqlSession = null;
+		List<MoneyBook> moneyBookList = null;
+		
+		try{
+			sqlSession=MyBatisSqlSessionFactory.getSqlSession();
+			moneyBookList = sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookEmailResult(mb_m_email);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return moneyBookList;
+	}
+
+	@Override
+	public List<MoneyBook> findMoneyBookDate(String mb_m_email) {
+		SqlSession sqlSession = null;
+		List<MoneyBook> moneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			moneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookDate(mb_m_email);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		
+		return moneyBook;
+	}
+
+	/*@Override
+	public List<Map<String, String>> findMoneyBookDateExpense(String mb_date, String mb_m_email) {
+		SqlSession sqlSession = null;
+		List<Map<String, String>> moneyBook = null;
+		
+		sqlSession = MyBatisSqlSessionFactory.getSqlSession();
+		moneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookDateExpense(mb_date, mb_m_email);
+		
+		return moneyBook;
+	}*/
+
+	@Override
+	public List<MoneyBook> findMoneyBookDateExpense(String mb_date) {
+		SqlSession sqlSession = null;
+		List<MoneyBook> moneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			moneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookDateExpense(mb_date);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		
+		return moneyBook;
+	}
+
+	@Override
+	public List<MoneyBook> findMoneyBookOutTypeResult(String mb_date) {
+		SqlSession sqlSession = null;
+		List<MoneyBook> moneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			moneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMoneyBookOutTypeResult(mb_date);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		
+		return moneyBook;
+	}
+
+	/*@Override
+	public List<MoneyBook> findMinMaxSum(String search_value, String mb_m_email) {
+		SqlSession sqlSession=null;
+		List<MoneyBook> findMoneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			findMoneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMinMaxSum(search_value, mb_m_email);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return findMoneyBook;
+	}*/
+	@Override
+	public List<MoneyBook> findMinMaxSum(HashMap<String, String> map) {
+		SqlSession sqlSession=null;
+		List<MoneyBook> findMoneyBook = null;
+		
+		try{
+			sqlSession= MyBatisSqlSessionFactory.getSqlSession();
+			findMoneyBook=sqlSession.getMapper(MoneyBookMapper.class).findMinMaxSum(map);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(sqlSession!=null){
+				sqlSession.close();
+			}
+		}
+		return findMoneyBook;
+	}
+
+
+
+	
+	
+
+}

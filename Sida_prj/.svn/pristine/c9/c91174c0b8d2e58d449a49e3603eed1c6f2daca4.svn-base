@@ -1,0 +1,274 @@
+package com.itwill.sida.controller;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.itwill.sida.dto.Card;
+import com.itwill.sida.dto.Member;
+import com.itwill.sida.dto.MoneyBook;
+import com.itwill.sida.service.CardService;
+import com.itwill.sida.service.MoneyBookService;
+
+@Controller
+public class MoneyBookController {
+	@Autowired
+	MoneyBookService moneyBookService;
+	@Autowired
+	CardService cardService;
+
+	public void setCardService(CardService cardService) {
+		this.cardService = cardService;
+	}
+
+	@RequestMapping("expenseOutTypeResult")
+	public List<MoneyBook> expenseOutTypeResult(@RequestParam("mb_date") String mb_date, Model model) throws Exception {
+		List<MoneyBook> moneyBookList = null;
+		moneyBookList = moneyBookService.findMoneyBookOutTypeResult(mb_date);
+		System.err.println("expenseOutTypeResult:" + moneyBookList);
+		return moneyBookList;
+	}
+
+	@RequestMapping(value = "/expenseDateList", produces = "application/json")
+	public @ResponseBody List<MoneyBook> expenseDateList(@RequestParam("mb_date") String mb_date, Model model)
+			throws Exception {
+		System.err.println("mb_date:" + mb_date);
+		List<MoneyBook> moneyBookList = null;
+		moneyBookList = moneyBookService.findMoneyBookDateExpense(mb_date);
+		System.err.println("날짜별 세부지출목록:" + moneyBookList);
+
+		return moneyBookList;
+
+	}
+
+	private HashMap<String, Object> rtnMoneyBookList_frontExpense(Member member) throws Exception {
+		List<MoneyBook> moneyBookList = null; // 이메일별 정보
+		List<MoneyBook> moneyBookResult = null; // 날짜별 지출 총 금액
+		List<MoneyBook> moneyBookOutType = null; // 지출형태(현금or카드)
+		List<MoneyBook> minMaxSumResult = null; // findMinMaxSum 결과값
+
+		List<String> list = new ArrayList<String>();
+		List<Map<String, String>> search_list = new ArrayList<Map<String, String>>(); // findMinMaxSum
+																						// 결과값
+		String mb_m_email = member.getM_email();
+		String mb_date = null;
+		String search_value = null; // ex)201601__ subString한 값
+
+		moneyBookList = moneyBookService.findMoneyBookEmailResult(mb_m_email);
+
+		System.err.println("전체 정보:" + moneyBookList);
+		moneyBookResult = moneyBookService.findMoneyBookDate(mb_m_email);
+		System.err.println("날짜별 지출총액:" + moneyBookResult);
+
+		for (int i = 0; i < moneyBookResult.size(); i++) {
+
+			mb_date = moneyBookResult.get(i).getMb_date();
+
+			String temp = "";
+			String tempList = "";
+			search_value = mb_date.substring(0, 6);
+
+			System.err.println("subString test!!!!!!:" + search_value);
+			moneyBookOutType = moneyBookService.findMoneyBookOutTypeResult(mb_date);
+			System.err.println("!date:" + mb_date);
+
+			for (int j = 0; j < moneyBookOutType.size(); j++) {
+				temp += moneyBookOutType.get(j).getMb_outType();
+			}
+			System.err.println("뭐가나올까:" + temp);
+
+			// 카드만 있으면 카드 출력
+			// 카드+현금 둘다있으면 카드/현금 출력
+			// 현금만 썼으면 현금출력
+			if (temp.matches(".*카드현금*")) {
+				// System.err.println("1");
+				tempList = "CARD/CASH";
+			} else if (temp.matches(".*현금.*카드")) {
+				// System.err.println("2");
+				tempList = "CARD/CASH";
+			} else if (temp.matches(".*카드현금.*")) {
+				// System.err.println("3");
+				tempList = "CARD/CASH";
+			} else if (temp.matches(".*카드*.")) {
+				// System.err.println("4");
+				tempList = "CARD";
+			} else if (temp.matches(".*현금*.")) {
+				// System.err.println("5");
+				tempList = "CASH";
+			}
+			list.add(tempList);
+			System.err.println("list:" + list);
+		}
+		System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!search_value:" + search_value);
+		System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!mb_m_email:" + mb_m_email);
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("search_value", search_value);
+		map.put("mb_m_email", mb_m_email);
+
+		search_list.add(map);
+
+		minMaxSumResult = moneyBookService.findMinMaxSum(map);
+		System.err.println("minMaxSumResult:" + minMaxSumResult);
+
+		for (int i = 0; i < list.size(); i++) {
+			System.err.println("list[" + i + "]:" + list.get(i));
+		}
+
+		HashMap<String, Object> mMap = new HashMap<String, Object>();
+
+		mMap.put("minMaxSumResult", minMaxSumResult);
+		mMap.put("list", list);
+		mMap.put("moneyBookList", moneyBookList);
+		mMap.put("moneyBookResult", moneyBookResult);
+		mMap.put("mb_m_email", mb_m_email);
+		return mMap;
+	}
+
+	@RequestMapping("expense")
+	public String expense(Model model, HttpSession session) throws Exception {
+		String forwardPath = "index";
+
+		Member member = (Member) session.getAttribute("sMember");
+
+		if (member == null) {
+			forwardPath = "redirect:login";
+		} else {
+			HashMap<String, Object> mMap = rtnMoneyBookList_frontExpense(member);
+
+			model.addAttribute("minMaxSumResult", (List<MoneyBook>) mMap.get("minMaxSumResult"));
+			model.addAttribute("list", (List<String>) mMap.get("list"));
+			model.addAttribute("moneyBookList", (List<MoneyBook>) mMap.get("moneyBookList"));
+			model.addAttribute("moneyBookResult", (List<MoneyBook>) mMap.get("moneyBookResult"));
+			model.addAttribute("mb_m_email", (String) mMap.get("mb_m_email"));
+			model.addAttribute("path", "expense.jsp");
+		}
+		return forwardPath;
+	}
+
+	@RequestMapping("moneyBookInsert")
+	public String moneyBookInsert(Model model, HttpSession session) {
+		String forwardPath = "index";
+		if ((Member) session.getAttribute("sMember") == null) {
+			return "redirect:login";
+		}
+		ArrayList<Card> cardList = null;
+		String tempList = "";
+
+		Member member = (Member) session.getAttribute("sMember");
+		String m_email = member.getM_email();
+
+		cardList = cardService.getCardListByEmail(m_email);
+
+		/*
+		 * for(int i=0;i<cardList.size();i++){ tempList +=
+		 * cardList.get(i).getC_name()+"\n"; }
+		 */
+
+		model.addAttribute("mb_m_email", m_email);
+		model.addAttribute("cardList", cardList);
+		model.addAttribute("path", "moneyBookInsert.jsp");
+		return forwardPath;
+
+	}
+
+	@RequestMapping("moneyBookInsertAction")
+	public String moneyBookInsertAction(@RequestParam("mb_date") String mb_date,
+			@RequestParam(value = "mb_outgo", required = false) int mb_outgo,
+			@RequestParam(value = "mb_income", required = false) int mb_income,
+			@RequestParam(value = "mb_memo", required = false) String mb_memo,
+			@RequestParam(value = "mb_category", required = false) String mb_category,
+			@RequestParam("mb_m_email") String mb_m_email, @RequestParam("mb_outType") String mb_outType, Model model, HttpSession session)
+					throws Exception {
+		String forwardPath = "index";
+
+		HashMap<String, String> mMap = new HashMap<String, String>();
+		String[] temp;
+		String tempAdd = "";
+		temp = mb_date.split("/");
+		for (int i = 0; i < temp.length; i++) {
+			tempAdd += temp[i];
+		}
+		mMap.put("mb_m_email", mb_m_email);
+		mMap.put("mb_date", tempAdd);
+		mMap.put("mb_category", mb_category);
+		mMap.put("mb_income", mb_income + "");
+		mMap.put("mb_outgo", mb_outgo + "");
+		mMap.put("mb_outType", mb_outType);
+		mMap.put("mb_memo", mb_memo);
+		
+		
+
+		System.err.println("moneyBookInsert:" + tempAdd + "," + mb_outgo + "," + mb_memo + "," + mb_category + ","
+				+ mb_m_email + "," + mb_outType + "," + mb_income);
+
+		moneyBookService.insertMoneyBook(mMap);
+		
+		Member member = (Member) session.getAttribute("sMember");
+		
+		rtnMoneyBookList_frontExpense(member);
+		HashMap<String, Object> tMap = rtnMoneyBookList_frontExpense(member);
+
+		model.addAttribute("minMaxSumResult", (List<MoneyBook>) tMap.get("minMaxSumResult"));
+		model.addAttribute("list", (List<String>) tMap.get("list"));
+		model.addAttribute("moneyBookList", (List<MoneyBook>) tMap.get("moneyBookList"));
+		model.addAttribute("moneyBookResult", (List<MoneyBook>) tMap.get("moneyBookResult"));
+		model.addAttribute("mb_m_email", (String) tMap.get("mb_m_email"));
+		model.addAttribute("path", "expense.jsp");
+		return forwardPath;
+
+	}
+
+	@RequestMapping("budget")
+	public String budget(Model model) {
+		String forwardPath = "index";
+		model.addAttribute("path", "budget.jsp");
+		return forwardPath;
+	}
+
+	@RequestMapping("dataStatistic")
+	public String dataStatistic(Model model) {
+		String forwardPath = "index";
+		model.addAttribute("path", "dataStatistic.jsp");
+		return forwardPath;
+	}
+
+	@RequestMapping("dataChart")
+	public String dataChart(Model model) {
+		String forwardPath = "index";
+		model.addAttribute("path", "dataChart.jsp");
+		return forwardPath;
+	}
+
+	private List<HashMap<String, String>> moneyBookInfo(List<MoneyBook> moneyBookList) throws Exception {
+		ArrayList<HashMap<String, String>> mList = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> mMap = null;
+		for (MoneyBook moneyBook : moneyBookList) {
+			mMap = new HashMap<String, String>();
+			mMap.put("mb_no", moneyBook.getMb_no() + "");
+			mMap.put("mb_m_email", moneyBook.getMb_m_email());
+			mMap.put("mb_date", moneyBook.getMb_date());
+			mMap.put("mb_category", moneyBook.getMb_category());
+			mMap.put("mb_income", moneyBook.getMb_income() + "");
+			mMap.put("mb_outgo", moneyBook.getMb_outgo() + "");
+			mMap.put("mb_outType", moneyBook.getMb_outType());
+			mMap.put("mb_memo", moneyBook.getMb_memo());
+
+			mList.add(mMap);
+		}
+
+		return mList;
+	}
+
+}
